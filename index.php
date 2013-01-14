@@ -18,8 +18,8 @@ $modul = explode("/", $modul);
 $filename = implode("/", $modul) . ".php";
 
 if (file_exists("./app/controller/" . $filename)) {
-    if (!in_array(end($modul), Config::get('allowed')) && !isset($_SESSION['login'])) {
-        //header('Location: /Benutzer/Anmelden');
+    if (!in_array(end($modul), Config::get('allowed')) && !isset($_SESSION['login'])  && Config::get('permisssion') != false) {
+        header('Location: /Benutzer/Anmelden');
     } else {
         include ("./app/controller/" . $filename);
         $classname = implode("_", $modul);
@@ -38,12 +38,15 @@ if (file_exists("./app/controller/" . $filename)) {
     }
 
 
-    if (!in_array(end($modul), Config::get('allowed')) && !isset($_SESSION['login'])) {
+    if (!in_array(end($modul), Config::get('allowed')) && !isset($_SESSION['login']) && Config::get('permisssion') != false) {
+        
         header('Location: /Benutzer/Anmelden');
         return false;
     }
+    
     //include template
     $template = $modul[0] . "/" . end($modul) . "/" . $view->Template['index'];
+    
     include ("./app/views/" . $template);
 
     if ($view->Template['index'] !== "json.php") {
@@ -51,15 +54,18 @@ if (file_exists("./app/controller/" . $filename)) {
         include("template/" . Config::get('template') . "/footer.php");
     }
 } elseif (file_exists("./app/controller/" . implode("/", array_slice($modul, 0, -1)) . ".php")) {
-//    if (!in_array(end($modul), Config::get('allowed')) && !isset($_SESSION['login'])) {
-//        header('Location: /Benutzer/Anmelden');
-//    } else {
+    
+    if (!in_array(end($modul), Config::get('allowed')) && !isset($_SESSION['login']) && Config::get('permisssion') != false ) {
+        
+        header('Location: /Benutzer/Anmelden');
+    } else {
+        
         include ("./app/controller/" . implode("/", array_slice($modul, 0, -1)) . ".php");
         $classname = implode("_", array_slice($modul, 0, -1));
         $view = new $classname;
         $method = end($modul);
         $view->$method();
-//    }
+    }
     //include template
     if ($view->Template[end($modul)] !== "json.php") {
         include("template/" . Config::get('template') . "/header.php");
