@@ -15,7 +15,7 @@ class Helper{
      * @return string
      */
     public static function jsScript($params){
-        return "<script href=\"".Config::get('address')."/public/js/".$params."\" type=\"text/javascript\"></script>\n\t\t";
+        return "<script src=\"".Config::get('address')."/public/js/".$params."\" type=\"text/javascript\"></script>\n\t\t";
     }
     /**
      * Small Helper to include css
