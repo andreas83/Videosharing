@@ -8,7 +8,7 @@ class Config
      *
      * @var unknown_type
      */
-    CONST INCLUDE_PATTERN = 'include';
+    CONST INCLUDE_PATTERN = 'config';
 
 
     /**
@@ -18,7 +18,7 @@ class Config
      *
      * @var string
      */
-    CONST PATH_PATTERN = 'include/config';
+    CONST PATH_PATTERN = 'app/config';
 
 
     /**
