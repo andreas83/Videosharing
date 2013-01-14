@@ -13,9 +13,9 @@ class Video_Manager
         
         $this->Title = "Upload";
         //we need some more upload stuff
-        $this->JS = Helper::jsScript("jquery-fineuploader.js");
+        $this->JS = Helper::jsScript("jquery.uploadify.min");
         $this->JS.= Helper::jsScript("upload.js");
-        $this->CSS.= Helper::cssScript("fineuploader.css");
+        $this->CSS.= Helper::cssScript("uploadify.css");
     }
 }
 ?>
