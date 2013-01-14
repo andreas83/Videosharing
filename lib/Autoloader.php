@@ -2,6 +2,7 @@
 /**
  * Auto loader
  * @param string $className
+ * @return bool
  */
 function autoload($className) 
 {
