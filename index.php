@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once ('init.php');
 
 header("Content-Type: text/html; charset=utf-8");
@@ -76,7 +76,7 @@ elseif ( file_exists("./app/controller/" . (string) implode("/", array_slice($mo
         $method = end($modul);
         $view->$method();
     }
-    
+
     // include template
     if ( $view->Template[end($modul)] !== "json.php" )
     {

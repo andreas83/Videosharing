@@ -1,3 +1,4 @@
-
-
-<div id="jquery-wrapped-fine-uploader"></div>
+        <form>
+                <div id="queue"></div>
+                <input id="file_upload" name="file_upload" type="file" multiple="true">
+        </form>
