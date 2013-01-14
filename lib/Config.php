@@ -76,7 +76,6 @@ class Config
      */
     private function __construct()
     {
-
         return;
     }
 
@@ -283,16 +282,9 @@ class Config
                         
                         if ( !empty($match) )
                         {
-                            $key = strtolower(trim($match[0]));
-                            
-                            $value = trim($match[1]);
-                            if ( count($match) >= 2 )
-                            {
-                                $key = array_shift($match);
-                                $value = trim(implode('=', $match));
-                            }
-                            
-                            $clean_config[$key] = $value;
+                            $key = strtolower(array_shift($match));
+                            $value = (count($match) > 1) ? implode('=', $match) : $match;                            
+                            $clean_config[trim($key)] = trim($value);
                         }
                     }
                     unset($match, $current_config);
@@ -551,7 +543,7 @@ class Config
             
             // open dir handle and lets try to find the directory
             $dh = @opendir("$parent_dir/$current_dir");
-            var_dump("$parent_dir/$current_dir");
+
             if ( !$dh ) continue;
             
             // start the loop based on the directory
@@ -588,6 +580,7 @@ class Config
         
         // check if it's set exist
         if ( empty($var) || !property_exists(self::$instance, (string) $var) ) return false;
+        
         
         return self::$instance->$var;
     }
