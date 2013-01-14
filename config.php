@@ -3,11 +3,14 @@ Config::create_instance();
 Config::set('dsn', 'mysql:host=localhost;dbname=boerse');
 Config::set('db_user', '');
 Config::set('db_pass', '');
-Config::set('basedir', '/var/www/');
+Config::set('basedir', '/var/www/videostream');
 Config::set('template', 'default');
 
-Config::set('permisssion', true);
-Config::set('allowed',  array("Video", "Manager"));
+Config::set('address', "http://localhost/videostream");
+
+//this enables the permission check
+Config::set('permisssion', false);
+Config::set('allowed',  array());
 
 
 // memcache
