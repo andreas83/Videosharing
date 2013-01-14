@@ -1,8 +1,8 @@
-$(document).ready(function () {
-    $('#jquery-wrapped-fine-uploader').fineUploader({
-    request: {
-    endpoint: 'server/handleUploads'
-    },
-    debug: true
-    });
+
+$(function() {
+        $('#file_upload').uploadify({
+                
+                'swf'      : 'http://localhost/videostream/public/uploadify.swf',
+                'uploader' : 'uploadify.php'
+        });
 });
