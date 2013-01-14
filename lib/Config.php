@@ -280,9 +280,19 @@ class Config
                         if ( strpos(trim($current_config[$i]), '#') !== false && strpos(trim($current_config[$i]), '#') <= 3 ) continue;
                         
                         $match = explode('=', $current_config[$i]);
+                        
                         if ( !empty($match) )
                         {
-                            $clean_config[strtolower(trim($match[0]))] = trim($match[1]);
+                            $key = strtolower(trim($match[0]));
+                            
+                            $value = trim($match[1]);
+                            if ( count($match) >= 2 )
+                            {
+                                $key = array_shift($match);
+                                $value = trim(implode('=', $match));
+                            }
+                            
+                            $clean_config[$key] = $value;
                         }
                     }
                     unset($match, $current_config);
