@@ -76,6 +76,7 @@ class Config
      */
     private function __construct()
     {
+
         return;
     }
 
@@ -85,12 +86,12 @@ class Config
      *
      * @return object
      */
-    public static function create_instance()
+    public static function create_instance( $config_path = null )
     {
 
         if ( self::$instance === NULL )
         {
-            self::$instance = new Config();
+            self::$instance = new Config($config_path);
         }
         // get the path of the config
         self::$instance->__get_config_path();
@@ -283,7 +284,7 @@ class Config
                         if ( !empty($match) )
                         {
                             $key = strtolower(array_shift($match));
-                            $value = implode('=', $match);                            
+                            $value = implode('=', $match);
                             $clean_config[trim($key)] = trim($value);
                         }
                     }
@@ -408,9 +409,13 @@ class Config
             throw new Exception("Couldn't open file handle for " . self::$instance->config_path . "/module/$module_name" . self::EXTENSION);
         }
         // if empty just skip it
-        if ( !filesize(self::$instance->config_path . "/module/$module_name.cfg") ) continue;
+        if ( !filesize(self::$instance->config_path . "/module/$module_name.cfg") )
+        {
+            return false;
+        }
         
         $config = (string) fread($fp, filesize(self::$instance->config_path . "/module/$module_name" . self::EXTENSION));
+        
         if ( strpos($config, "\n") === false )
         {
             $current_config = array(
@@ -490,7 +495,7 @@ class Config
         
         // if it's opened from the browser just take the default
         // docroot
-        if ( !empty($_SERVER['DOCUMENT_ROOT']) )
+        if ( !empty($_SERVER['DOCUMENT_ROOT']) && empty($this->config_path) )
         {
             $this->config_path = $_SERVER['DOCUMENT_ROOT'] . '/' . self::PATH_PATTERN;
             return true;
@@ -543,7 +548,7 @@ class Config
             
             // open dir handle and lets try to find the directory
             $dh = @opendir("$parent_dir/$current_dir");
-
+            
             if ( !$dh ) continue;
             
             // start the loop based on the directory
@@ -580,7 +585,6 @@ class Config
         
         // check if it's set exist
         if ( empty($var) || !property_exists(self::$instance, (string) $var) ) return false;
-        
         
         return self::$instance->$var;
     }

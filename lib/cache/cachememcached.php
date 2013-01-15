@@ -281,9 +281,11 @@ class CacheMemcached extends Memcached
         foreach ( $key_array as $key_del )
         {
             if ( empty($this->cache_listing) ) break;
-            foreach ( $this->cache_listing as $key )
+            foreach ( $this->cache_listing as $key => $set )
             {
-                if ( strpos(strtolower($key), strtolower($key_del) !== false) ) $this->delete($key);
+                if ( strpos(strtolower($key), strtolower($key_del)) === false ) continue;
+                
+                $this->delete($key);
             }
         }
         
