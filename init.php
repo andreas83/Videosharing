@@ -28,8 +28,8 @@ if ( !function_exists('self_aware') )
 
 $base = (string) (!empty($_SERVER['DOCUMENT_ROOT'])) ? $_SERVER['DOCUMENT_ROOT'] : self_aware();
 
-include_once ("lib/Config.php");
+include_once ("lib/config.php");
 Config::create_instance();
-include_once ("lib/Autoloader.php");
+include_once ("lib/autoloader.php");
 
 ?>
