@@ -10,6 +10,9 @@ class Video_Manager
     function index()
     {
         $this->var = "Here iam";
+        $this->user = new User(1231231231);
+        var_dump($this->user); 
+        
     }
     
     /**
