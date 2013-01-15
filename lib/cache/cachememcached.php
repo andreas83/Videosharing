@@ -87,9 +87,8 @@ class CacheMemcached extends Memcached
      */
     public function save_cache_listing()
     {
-        
-        // if ( md5(serialize($this->cache_listing)) === $this->_md5_sum )
-        // return;
+
+        if ( md5(serialize($this->cache_listing)) === $this->_md5_sum ) return;
         return parent::set('cache_listing', $this->cache_listing);
     }
 

@@ -13,6 +13,13 @@ body {
     font-family: Arial sans-serif;
 }
 
+#tv_logo {
+    width: 98px;
+    height: 108px;
+    background: url("/public/img/tube.png") no-repeat scroll left top transparent;
+    float: left;
+}
+
 #logo {
     background: url("/public/img/sprite.png") no-repeat scroll right top transparent;
     height: 40px;
@@ -26,8 +33,15 @@ body {
     height: 100%;
 }
 
-#headline h1 {
-    float: right:
+h1 {
+    font-size: 36px;
+    color: #323232;
+    float: left;
+    font-family: 'GaramondClassicFSRegular', Georgia, sans-serif;
+}
+
+h2 {
+    font-family: 'GaramondClassicFSRegular', Georgia, sans-serif;
 }
 
 #top_wrapper {
@@ -37,6 +51,22 @@ body {
     top: 0px;
     box-shadow: 0 5px 5px #d3d3d3;
     clear: both;
+}
+
+#topnav {
+    top: 80px;
+    cursor: pointer; position : relative;
+    color: #333333;
+    display: block;
+    font-size: 14px;
+    line-height: 14px;
+    margin: 0 12px 0 0;
+    text-transform: uppercase;
+    position: relative;
+}
+
+#nav_list li {
+    display: inline;
 }
 
 #header {
@@ -49,6 +79,13 @@ body {
     margin: auto;
     margin-top: 96px;
     min-height: 800px;
+    padding: 33px 0px 0px 0px;
+}
+
+#profile_box {
+    float: left;
+    width: 120px;
+    height: 100%;
 }
 
 #bottom_wrapper {

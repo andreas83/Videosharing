@@ -7,7 +7,7 @@ class Video_Manager
     {
 
         $this->Template["index"] = "index.php";
-        $this->Template["Upload"] = "upload.php";
+        $this->Template["upload"] = "upload.php";
     }
 
 
@@ -15,6 +15,7 @@ class Video_Manager
     {
 
         $this->title = "Overview";
+        $this->sub_headline = "Overview";
     }
 
 
