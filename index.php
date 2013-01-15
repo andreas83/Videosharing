@@ -16,7 +16,7 @@ if ( !$modul )
 
 $modul = explode("/", $modul);
 
-$filename = (string) implode("/", $modul) . ".php";
+$filename = (string) strtolower(implode("/", $modul)) . ".php";
 
 if ( file_exists("./app/controller/" . (string) $filename) )
 {
@@ -50,7 +50,7 @@ if ( file_exists("./app/controller/" . (string) $filename) )
     }
     
     // include template
-    $template = $modul[0] . "/" . (string) end($modul) . "/" . (string) $view->Template['index'];
+    $template = strtolower($modul[0] . "/" . (string) end($modul) . "/" . (string) $view->Template['index']);
     
     include_once ("./app/views/" . (string) $template);
     
@@ -60,7 +60,7 @@ if ( file_exists("./app/controller/" . (string) $filename) )
         include ("template/" . (string) Config::get('template') . "/footer.php");
     }
 }
-elseif ( file_exists("./app/controller/" . (string) implode("/", array_slice($modul, 0, -1)) . ".php") )
+elseif ( file_exists(strtolower("./app/controller/" . (string) implode("/", array_slice($modul, 0, -1))) . ".php") )
 {
     
     if ( !in_array(end($modul), Config::get('allowed')) && !isset($_SESSION['login']) && Config::get('permisssion') != false )
@@ -71,7 +71,7 @@ elseif ( file_exists("./app/controller/" . (string) implode("/", array_slice($mo
     else
     {
         
-        include_once ("./app/controller/" . (string) implode("/", array_slice($modul, 0, -1)) . ".php");
+        include_once (strtolower("./app/controller/" . (string) strtolower(implode("/", array_slice($modul, 0, -1)))) . ".php");
         $classname = (string) implode("_", array_slice($modul, 0, -1));
         $view = new $classname();
         $method = end($modul);
@@ -88,7 +88,7 @@ elseif ( file_exists("./app/controller/" . (string) implode("/", array_slice($mo
         header('Content-type: application/json');
     }
     
-    $template = $modul[0] . "/" . (string) end(array_slice($modul, 0, -1)) . "/" . (string) $view->Template[end($modul)];
+    $template = strtolower($modul[0] . "/" . (string) end(array_slice($modul, 0, -1)) . "/" . (string) $view->Template[end($modul)]);
     if ( file_exists("./app/views/" . (string) $template) )
     {
         include_once ("./app/views/" . (string) $template);
