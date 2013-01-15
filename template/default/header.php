@@ -7,10 +7,10 @@
        
         <script href="<?php echo Config::get('address'); ?>/public/js/jquery.js" type="text/javascript"></script>
         <?php 
-        if(isset($view->CSS))
+        if (isset($view->CSS))
             echo $view->CSS;
 
-        if(isset($view->JS))
+        if (isset($view->JS))
             echo $view->JS;
         
         ?>
