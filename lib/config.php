@@ -283,7 +283,7 @@ class Config
                         if ( !empty($match) )
                         {
                             $key = strtolower(array_shift($match));
-                            $value = (count($match) > 1) ? implode('=', $match) : $match;                            
+                            $value = implode('=', $match);                            
                             $clean_config[trim($key)] = trim($value);
                         }
                     }

@@ -15,6 +15,7 @@ if ( !$modul )
 }
 
 $modul = explode("/", $modul);
+
 $filename = (string) implode("/", $modul) . ".php";
 
 if ( file_exists("./app/controller/" . (string) $filename) )
