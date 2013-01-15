@@ -13,6 +13,12 @@ class FFmpeg {
     //avconv is just a fork of ffmpeg
     public $converter = "ffmpeg";
     
+    
+    /**
+     * filename
+     * 
+     * @var string
+     */
     public $filename = "";
     
     //how many thread should ffmpeg use while converting 

@@ -11,11 +11,10 @@ if($view->thumb):
     echo '<img src="'.$view->thumb.'_thumbs3/00000001.png" width="300">';
 
 ?>
- <video width="320" height="240" controls>
-
-  <source src="<?=$view->thumb;?>.webm" type="video/webm">
-  <source src="<?=$view->thumb;?>.mp4" type="video/mp4">
+<video width="320" height="240" controls>
+	<source src="<?=$view->thumb;?>.webm" type="video/webm"> </source>
+	<source src="<?=$view->thumb;?>.mp4" type="video/mp4"></source>
 </video> 
-<?
+<?php
 endif;
 ?>

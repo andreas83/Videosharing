@@ -2,6 +2,7 @@
 class User extends BaseApp
 {
 
+
     /**
      *
      * @var int
@@ -63,6 +64,7 @@ class User extends BaseApp
      */
     public function __construct( $id = '' )
     {
+
         parent::__construct();
         if ( !empty($id) )
         {
@@ -121,7 +123,8 @@ class User extends BaseApp
     public function get_list( $data = '' )
     {
 
-        if ( ($obj = unserialize($this->cache->get(__CLASS__ .'_list'. md5(serialize($data))))) ) return $obj;
+        $obj = $this->cache->get(__CLASS__ . '_list' . md5(serialize($data)));
+        if ( !empty($obj) ) return unserialize($obj);
         
         $sql = "SELECT u.id, u.group_id, u.username, u.password, u.email, u.firstname, u.lastname, u.info FROM user as u";
         if ( is_array($data) )
@@ -136,7 +139,7 @@ class User extends BaseApp
         }
         $stmt = $this->dbh->query($sql);
         $obj = $stmt->fetchALL(PDO::FETCH_CLASS, 'user');
-        $this->cache->set(__CLASS__ .'_list'. md5(serialize($data)), $obj);
+        $this->cache->set(__CLASS__ . '_list' . md5(serialize($data)), $obj);
         return $obj;
     }
 
@@ -151,11 +154,11 @@ class User extends BaseApp
         
         $sql = "SELECT u.id, u.group_id, u.username, u.password, u.email, u.firstname, u.lastname, u.info FROM user as u WHERE
         u.id = $this->id";
-        if ( !($result = unserialize(__CLASS__ .'_'.$this->cache->get(md5($sql)))) )
+        if ( !($result = unserialize(__CLASS__ . '_' . $this->cache->get(md5($sql)))) )
         {
             $stmt = $this->dbh->query($sql);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            $this->cache->set(__CLASS__ .'_'.md5($sql), serialize($result));
+            $this->cache->set(__CLASS__ . '_' . md5($sql), serialize($result));
         }
         
         foreach ( $result as $key => $val )
@@ -193,7 +196,10 @@ class User extends BaseApp
             $stmt = $this->dbh->prepare($sql);
             $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
         }
-        $this->cache->delete_from_list(__CLASS__ .'_');
+        $this->cache->delete_from_list(array(
+                                            __CLASS__ . '_'
+        ));
+        
         $stmt->bindValue(':group_id', $this->group_id, PDO::PARAM_INT);
         $stmt->bindValue(':username', $this->username, PDO::PARAM_STR);
         $stmt->bindValue(':password', $this->password, PDO::PARAM_STR);

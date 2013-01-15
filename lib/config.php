@@ -30,6 +30,13 @@ class Config
 
 
     /**
+     * constant placeholder for the generic includes
+     * 
+     * @var string
+     */
+    CONST PREFIX = '*';
+    
+    /**
      * singelton instance check
      *
      * @var object
@@ -161,7 +168,7 @@ class Config
             {
                 $_config_set[] = (string) $config_file;
             }
-            $config_file = (string) $this->config_path . '/' . 'all.' . (string) implode('.', $possible) . (string) self::EXTENSION;
+            $config_file = (string) $this->config_path . '/' . self::PREFIX . '.' . (string) implode('.', $possible) . (string) self::EXTENSION;
             // cleanup the case if there are two dots in a row (*..cfg)
             $config_file = (string) preg_replace('/[\.]{2}/', '.', $config_file);
             $i++;
@@ -185,11 +192,11 @@ class Config
 
             if ( substr_count($a, '.') == substr_count($a, '.') )
             {
-                if ( strpos($a, 'all') == true && strpos($b, 'all') == false )
+                if ( strpos($a, Config::PREFIX) == true && strpos($b, Config::PREFIX) == false )
                 {
                     return -1;
                 }
-                elseif ( strpos($a, 'all') == false && strpos($b, 'all') == true )
+                elseif ( strpos($a, Config::PREFIX) == false && strpos($b, Config::PREFIX) == true )
                 {
                     return 1;
                 }
@@ -228,11 +235,11 @@ class Config
         // set it to the global config set array
         $this->config_set = $this->__get_config_set();
         
-        if ( empty($this->config_set) || count($this->config_set) < 3 )
+        if ( empty($this->config_set) )
         {
             // set default config set for the default execution
             $this->config_set = array(
-                                    "{$this->config_path}/*" . (string) self::EXTENSION
+                                    "{$this->config_path}/" . (string) self::PREFIX . (string) self::EXTENSION
             );
         }
         
