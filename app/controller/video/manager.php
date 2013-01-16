@@ -1,8 +1,6 @@
 <?php
 class Video_Manager
 {
-
-
     function __construct()
     {
 
@@ -23,14 +21,19 @@ class Video_Manager
      * This Controller is responsible for
      * the Upload Form handling
      */
-    function Upload()
+    function upload()
     {
 
         $this->Title = "Upload";
-        // we need some more upload stuff
-        $this->JS = Helper::jsScript("jquery.uploadify.min");
-        $this->JS .= Helper::jsScript("upload.js");
-        $this->CSS = Helper::cssScript("uploadify.css");
+//        uploadify just works with old jquery versions...
+//        $this->JS = Helper::jsScript("jquery.uploadify.min");
+//        $this->JS .= Helper::jsScript("upload.js");
+//        $this->CSS = Helper::cssScript("uploadify.css");
+        
+        $this->JS .= Helper::jsScript("flowplayer.min.js");
+        $this->JS .= Helper::jsScript("video.js");
+        $this->CSS = Helper::cssScript("minimalist.css");
+        
         
         if ( isset($_FILES) && isset($_POST) && !empty($_FILES) )
         {
@@ -43,9 +46,9 @@ class Video_Manager
             $ffmpeg = new FFmpeg(Config::get('basedir') . "/public/upload/" . $tmpVideoName);
             $ffmpeg->getFileInformation();
             $ffmpeg->createThumbnail();
-            // $ffmpeg->convertVideo("mp4");
-            $ffmpeg->convertVideo("webm");
-            
+            //$ffmpeg->convertVideo("webm");
+            //$ffmpeg->convertVideo("mp4");
+            $ffmpeg->convertVideo("mp4");
             $this->thumb = Config::get('address') . "/public/upload/" . $tmpVideoName;
         }
     }
