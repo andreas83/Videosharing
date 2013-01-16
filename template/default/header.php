@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="stylesheet" href="<?php echo Config::get('address'); ?>/public/css/default.css" type="text/css"/>
        
-        <script href="<?php echo Config::get('address'); ?>/public/js/jquery.js" type="text/javascript"></script>
+        <script src="<?php echo Config::get('address'); ?>/public/js/jquery.js" type="text/javascript"></script>
         <?php 
         if (isset($view->CSS))
             echo $view->CSS;
