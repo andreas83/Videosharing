@@ -2,14 +2,19 @@
 require_once ('init.php');
 
 header("Content-Type: text/html; charset=utf-8");
-
+ session_start();
+ 
 $modul = (isset($_GET['modul']) ? $_GET['modul'] : false);
 
 if ( !$modul )
 {
     $view = new stdClass();
     $view->Title = "Videomanager";
+    
+ 
     include_once ("template/" . (string) Config::get('template') . "/header.php");
+    
+    include_once ("template/" . (string) Config::get('template') . "/main.php");
     include_once ("template/" . (string) Config::get('template') . "/footer.php");
     die();
 }
@@ -30,11 +35,13 @@ if ( file_exists("./app/controller/" . (string) $filename) )
         $classname = implode("_", $modul);
         $view = new $classname();
         $view->index();
+        
     }
     
     // include template
     if ( $view->Template['index'] !== "json.php" )
     {
+       
         include_once ("template/" . (string) Config::get('template') . "/header.php");
     }
     else

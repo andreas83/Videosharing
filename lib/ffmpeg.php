@@ -92,39 +92,38 @@ class FFmpeg {
         exec("mplayer ".$this->filename." -ss ".date('H:i:s', mktime(0,0,$middle))." -frames 1 -vo png:z=9:outdir=".$this->filename."_thumbs2 2>&1", $out);
         exec("mplayer ".$this->filename." -ss ".date('H:i:s', mktime(0,0,$end))." -frames 1 -vo png:z=9:outdir=".$this->filename."_thumbs3 2>&1", $out);
         
-       /**
-        *      
-        * Attention if converter is set to avconv 
-        * you get allways the same thumbnail   
-
-        echo $duration."<br>";
-        echo $start."<br>";
-        echo $middle."<br>";
-        echo $end."<br>";
-        
-        
-        exec($this->converter ." -itsoffset -".$start." -i ".$this->filename." -vcodec mjpeg -vframes 1 -an -f rawvideo -s ".$res." ".$this->filename."start.jpg 2>&1", $output);
-        exec($this->converter ." -itsoffset -".$middle." -i ".$this->filename." -vcodec mjpeg -vframes 1 -an -f rawvideo -s ".$res." ".$this->filename."middle.jpg 2>&1", $output);
-        exec($this->converter ." -itsoffset -".$end." -i ".$this->filename." -vcodec mjpeg -vframes 1 -an -f rawvideo -s ".$res." ".$this->filename."end.jpg 2>&1", $output);
-        echo $this->converter ." -itsoffset -".$end." -i ".$this->filename." -vcodec mjpeg -vframes 1 -an -f rawvideo -s ".$res." ".$this->filename."end.jpg 2>&1";
-         *  */
-        
 
     }
     
     public function convertVideo($type="webm"){
         $start=date("U");
         if($type=="webm")
-            exec($this->converter ." -i ".$this->filename." -threads ".$this->threads."  -acodec libvorbis -ac 2 -ab 96k -ar 44100 -b 345k -s 640x360 $this->filename.".$type);
-        
+            exec("nohup ".$this->converter ." -i ".$this->filename." -threads ".$this->threads."  -acodec libvorbis -ac 2 -ab 96k -ar 44100 -b 345k -s 640x360 ".$this->filename."-notFinished.".$type. "  > /dev/null 2> /dev/null & echo $");
+            exec("nohub mv ".$this->filename."-notFinished.".$type." " .$this->filename.".".$type. " > /dev/null 2> /dev/null & echo $");
         //480p at 500kbit/s
         if($type=="mp4"){
-            exec($this->converter ." -i ".$this->filename." -threads ".$this->threads." -vcodec libx264 -vprofile high -preset slow -b:v 500k -maxrate 500k -bufsize 1000k -vf scale=-1:480 -threads 0 -acodec libfdk_aac -b:a 128k $this->filename.".$type);
+            //exec($this->converter ." -i ".$this->filename." -threads ".$this->threads."  -vcodec libx264 -level 12 -b 1048576 -r 25 -bt 1179648 -s 240x192 -coder 1 -flags +loop -cmp +chroma -partitions +parti8x8+parti4x4+partp8x8+partb8x8 -me_method hex -subq 7 -me_range 16 -g 250 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -b_strategy 1 -qcomp 0.6 -qmin 10 -qmax 51 -qdiff 4 -bf 2 -refs 1 -directpred 1 -trellis 0 -flags2 +bpyramid+wpred+dct8x8+fastpskip -f mp4 -acodec libfaac -ab 458752 -ac 2 -ar 48000 $this->filename.".$type);
+            $pid=shell_exec("nohup ".$this->converter ." -i ".$this->filename." -preset slow -threads ".$this->threads."  -vcodec libx264 -level 12 -b 1048576 -r 25 -bt 1179648 -s 240x192 -coder 1 -flags +loop -cmp +chroma -partitions +parti8x8+parti4x4+partp8x8+partb8x8 -me_method hex -subq 7 -me_range 16 -g 250 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -b_strategy 1 -qcomp 0.6 -qmin 10 -qmax 51 -qdiff 4 -bf 2 -refs 1 -directpred 1 -trellis 0 -flags2 +bpyramid+wpred+dct8x8+fastpskip -f mp4 -acodec libfaac -ab 458752 -ac 2 -ar 48000 $this->filename-notFinished.".$type. " > /dev/null 2> /dev/null & echo $!");            
+            //$pid=shell_exec("nohup ".$this->converter ." -y -i ".$this->filename." -threads ".$this->threads." -y -r 24000/1001 -b 6144k -bt 8192k -vcodec libx264 -pass 1 -flags +loop -me_method dia -g 250 -qcomp 0.6 -qmin 10 -qmax 51 -qdiff 4 -bf 16 -b_strategy 1 -i_qfactor 0.71 -cmp +chroma -subq 1 -me_range 16 -coder 1 -sc_threshold 40 -flags2 -bpyramid-wpred-mixed_refs-dct8x8+fastpskip -keyint_min 25 -refs 1 -trellis 0 -directpred 1 -partitions -parti8x8-parti4x4-partp8x8-partp4x4-partb8x8-an $this->filename-notFinished.".$type. " > /dev/null 2> /dev/null & echo $!");
             
         }
+        return trim($pid);
+
         $end=date("U");
         $benchmark=$end-$start;
-        echo $benchmark ." sek to long for  ".$type."<br/>";
+        //echo $benchmark ." sek to long for  ".$type."<br/>";
+    }
+    
+    public static function markFinished($video)
+    {
+        exec("mv ".$video."-notFinished.mp4 " .$video.".mp4");
+        
+    }
+    
+    public static function isProcessRunning($PID)
+    {
+        exec("ps $PID", $ProcessState);
+        return(count($ProcessState) >= 2);
     }
 }
 
