@@ -122,6 +122,7 @@ class User extends BaseApp
      */
     public function get_list( $data = '' )
     {
+        
 
         $obj = $this->cache->get(__CLASS__ . '_list' . md5(serialize($data)));
         if ( !empty($obj) ) return unserialize($obj);
@@ -139,11 +140,30 @@ class User extends BaseApp
         }
         $stmt = $this->dbh->query($sql);
         $obj = $stmt->fetchALL(PDO::FETCH_CLASS, 'user');
+        
+
         $this->cache->set(__CLASS__ . '_list' . md5(serialize($data)), $obj);
         return $obj;
     }
 
 
+    public function __sleep(){
+        return array(
+                    'id','group_id', 
+                    'username', 
+                    'password', 
+                    'email', 
+                    'firstname', 
+                    'lastname', 
+                    'info'
+        );
+    }
+    
+    public function __wakeup(){
+        $this->load_database_handler();
+        $this->load_cache_handler();
+    }
+    
     /**
      * Get one Dataset from the db
      */
@@ -167,7 +187,35 @@ class User extends BaseApp
         }
     }
 
-
+    /**
+     * Get one Dataset from the db
+     */
+    public function check_login($user, $pass)
+    {
+        $data = $this->check(array("username" => $user, "password" => $pass));
+        
+        
+        $sql = "SELECT u.id, u.group_id, u.username, u.password, u.email, u.firstname, u.lastname, u.info FROM user as u WHERE
+        u.username='".$user."' and u.password=md5(\"".$pass."\")";
+        
+        if ( !($result = unserialize(__CLASS__ . '_' . $this->cache->get(md5($sql)))) )
+        {
+            $stmt = $this->dbh->query($sql);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->cache->set(__CLASS__ . '_' . md5($sql), serialize($result));
+        }
+        if($result)
+        {
+            foreach ( $result as $key => $val )
+            {
+                $this->$key = $val;
+                
+            }     
+            return true;
+        }
+        return false;
+    }
+    
     /**
      * The save method is responsability for
      * saving and updating a dataset

@@ -25,7 +25,7 @@ trait DBTrait
     public $dbobject = null;
 
 
-    private function load_database_handler()
+    protected function load_database_handler()
     {
 
         switch ( Config::get('database_handler') )
@@ -42,5 +42,11 @@ trait DBTrait
         }
         
         return true;
+    }
+    
+    protected function unload_database_handler()
+    {
+        $this->dbobject = null;
+        $this->dbh = null;
     }
 }
