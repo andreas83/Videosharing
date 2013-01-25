@@ -23,6 +23,11 @@ class Video extends BaseApp {
     public $descripton = ''; 
 
     /**
+     * @var string
+     */
+    public $filename = ''; 
+    
+    /**
      * @var int
      */
     public $visibility_setting = 0; 
@@ -30,8 +35,13 @@ class Video extends BaseApp {
     /**
      * @var int
      */
-    public $enabled = 0; 
+    public $isConverted = 0; 
 
+    /**
+     * @var int
+     */
+    public $thumb = 0; 
+    
     protected $db;
 
         
@@ -63,8 +73,10 @@ class Video extends BaseApp {
         'user_id' => FILTER_SANITIZE_NUMBER_INT,
         'title' => FILTER_SANITIZE_STRING,
         'descripton' => FILTER_SANITIZE_STRING,
+        'filename' => FILTER_SANITIZE_STRING,
         'visibility_setting' => FILTER_SANITIZE_NUMBER_INT,
-        'enabled' => FILTER_SANITIZE_NUMBER_INT
+        'isConverted' => FILTER_SANITIZE_NUMBER_INT,
+        'thumb' => FILTER_SANITIZE_NUMBER_INT
         );
         return filter_var_array($data, $check);
     }
@@ -98,12 +110,16 @@ class Video extends BaseApp {
         $stmt->execute();
     }
     
+    
+        
+    
     public function getPages ($pointer = false, $show = false, $user_id=false)
     {
         if(is_numeric($user_id))
-            $sql_extra=" where v.user_id=".$user_id;
+            $sql_extra=" where v.user_id=".$user_id. " and isConverted=1";
         else
             $sql_extra="";
+        
         
         if(!$pointer && !$show)
         {
@@ -117,8 +133,9 @@ class Video extends BaseApp {
         
             return true;
         }
-
-        $sql = "SELECT v.id, v.user_id, v.title, v.descripton, v.visibility_setting, v.enabled FROM video as v $sql_extra limit $pointer, $show";
+        
+        $sql = "SELECT v.id, v.user_id, v.title, v.descripton, v.filename, v.visibility_setting, v.isConverted, v.thumb FROM video as v $sql_extra order by id desc limit $pointer, $show";
+        
         $stmt = $this->dbh->query($sql);
         $obj = $stmt->fetchALL(PDO::FETCH_CLASS, 'Video');
         return $obj;
@@ -133,24 +150,31 @@ class Video extends BaseApp {
      */
     public function get_list ($data = '')
     {
+        
         $obj = $this->cache->get(__CLASS__ . '_list' . md5(serialize($data)));
         if ( !empty($obj) ) return unserialize($obj);
         
-        $sql = "SELECT v.id, v.user_id, v.title, v.descripton, v.visibility_setting, v.enabled FROM video as v";
+        $sql = "SELECT v.id, v.user_id, v.title, v.filename, v.descripton, v.visibility_setting, v.isConverted, v.thumb FROM video as v";
         if (is_array($data))
         {
+             
             $data = $this->check($data);
+            
             $sql .= " WHERE";
             foreach ($data as $key => $value)
             {
-                if ($value)
+                if ($value!==null)
                     $sql .= " v.$key = '$value' and";
             }
+            
             $sql = substr($sql, 0, -4);
         }
-        $stmt = $this->dbh->query($sql);
-        $obj = $stmt->fetchALL(PDO::FETCH_CLASS, 'video');
         
+        $stmt = $this->dbh->query($sql);
+        
+        
+        $obj = $stmt->fetchALL(PDO::FETCH_CLASS, 'Video');
+
         $this->cache->set(__CLASS__ . '_list' . md5(serialize($data)), $obj);
         return $obj;
 
@@ -160,14 +184,50 @@ class Video extends BaseApp {
     /**
      * Get one Dataset from the db
      */
+    public function getData ($data)
+    {
+     
+
+        $sql = "SELECT v.id, v.user_id, v.title, v.filename, v.descripton, v.visibility_setting, v.isConverted, v.thumb FROM video as v";
+        if (is_array($data))
+        {
+
+            $data = $this->check($data);
+
+            $sql .= " WHERE";
+            foreach ($data as $key => $value)
+            {
+                if ($value!==null)
+                    $sql .= " v.$key = '$value' and";
+            }
+
+            $sql = substr($sql, 0, -4). " limit 1";
+        }
+        if ( !($result = unserialize($this->cache->get(__CLASS__ . '_' . md5($sql)))) )
+        {
+            $stmt = $this->dbh->query($sql);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->cache->set(__CLASS__ . '_' . md5($sql), serialize($result));
+        }
+    
+        foreach ($result as $key=>$val)
+        {
+            $this->$key=$val;
+        }
+    }
+
+    /**
+     * Get one Dataset from the db
+     */
     public function get ()
     {
         if (empty($this->id) || !is_numeric($this->id))
             return false;
 
-        $sql = "SELECT v.id, v.user_id, v.title, v.descripton, v.visibility_setting, v.enabled FROM video as v WHERE
+        $sql = "SELECT v.id, v.user_id, v.title, v.filename, v.descripton, v.visibility_setting, v.isConverted, v.thumb FROM video as v WHERE
         v.id = $this->id";
-        if ( !($result = unserialize(__CLASS__ . '_' . $this->cache->get(md5($sql)))) )
+        
+        if ( !($result = unserialize($this->cache->get(__CLASS__ . '_' . md5($sql)))) )
         {
             $stmt = $this->dbh->query($sql);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -179,19 +239,18 @@ class Video extends BaseApp {
             $this->$key=$val;
         }
     }
-
-
     /**
      * The save method is responsability for
      * saving and updating a dataset
      */
     public function save ()
     {
+        
         if (empty($this->id))
         {
             $sql = 'INSERT INTO video 
-            (user_id, title, descripton, visibility_setting, enabled) VALUES
-            (:user_id, :title, :descripton, :visibility_setting, :enabled)';
+            (user_id, title, descripton, filename, visibility_setting, isConverted, thumb) VALUES
+            (:user_id, :title, :descripton, :filename, :visibility_setting, :isConverted, :thumb)';
             $stmt = $this->dbh->prepare($sql);
         }
         else
@@ -200,8 +259,10 @@ class Video extends BaseApp {
                          user_id = :user_id, 
                          title = :title, 
                          descripton = :descripton, 
+                         filename = :filename,
                          visibility_setting = :visibility_setting, 
-                         enabled = :enabled';        
+                         isConverted = :isConverted,
+                         thumb = :thumb';        
             $sql .= " WHERE id = :id";
             $stmt = $this->dbh->prepare($sql);
             
@@ -212,9 +273,12 @@ class Video extends BaseApp {
         $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
         $stmt->bindValue(':title', $this->title, PDO::PARAM_STR);
         $stmt->bindValue(':descripton', $this->descripton, PDO::PARAM_STR);
+        $stmt->bindValue(':filename', $this->filename, PDO::PARAM_STR);
         $stmt->bindValue(':visibility_setting', $this->visibility_setting, PDO::PARAM_INT);
-        $stmt->bindValue(':enabled', $this->enabled, PDO::PARAM_INT);
+        $stmt->bindValue(':isConverted', $this->isConverted, PDO::PARAM_INT);
+        $stmt->bindValue(':thumb', $this->thumb, PDO::PARAM_INT);
         $stmt->execute();
+        
         if (empty($this->id)) {
          $this->id = $this->dbh->lastInsertId();
         }
@@ -238,7 +302,7 @@ class Video extends BaseApp {
      */
     public function __sleep()
     {
-        return array('id','user_id','title','descripton','visibility_setting','enabled');
+        return array('id','user_id','title','descripton', 'filename', 'visibility_setting','isConverted', 'thumb');
     }
     
 

@@ -484,11 +484,10 @@ class Config
                 if ( strpos($n, $tmp[0]) === false ) return false;
                 
                 $nx = $n . '/' . array_shift($tmp);
-                echo $nx;
+                
                 
                 if ( count($tmp) == 1 && is_dir("$n/{$tmp[0]}") )
                 {
-                    echo "$n/{$tmp[0]}";
                     return "$n/{$tmp[0]}";
                 }
                 elseif ( is_dir("$n/{$tmp[0]}") )

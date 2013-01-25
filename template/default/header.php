@@ -5,6 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="stylesheet" href="<?php echo Config::get('address'); ?>/public/css/default.css" type="text/css"/>
         <link rel="stylesheet" href="<?php echo Config::get('address'); ?>/public/css/bootstrap.min.css" type="text/css"/>
+        <base id="base" href="<?php echo Config::get('address'); ?>"></base>
+ 
         <script src="<?php echo Config::get('address'); ?>/public/js/jquery.js" type="text/javascript"></script>
         <?php 
         if (isset($view->CSS))
@@ -22,8 +24,11 @@
     <a class="brand" href="<?php echo Config::get('address'); ?>">Video Manager</a>
     <ul class="nav">
     <li><a href="<?php echo Config::get('address'); ?>">Home</a></li>
+    <?
+    if(isset($_SESSION['user'])):
+    ?>   
     <li><a href="<?php echo Config::get('address'); ?>/video/manager/upload">Upload</a></li>
-    
+    <? endif; ?>
     </ul>
     
             <?
