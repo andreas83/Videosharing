@@ -9,6 +9,8 @@ class Video_Manager
         $this->Template["checkStatus"] = "json.php";
         $this->Template["uploadProgress"] = "json.php";
         $this->Template["save"] = "upload.php";
+        $this->Template["edit"] = "upload.php";
+        $this->Template["update"] = "upload.php";
         $this->showUpload=true;
     }
 
@@ -40,44 +42,34 @@ class Video_Manager
         
         if ( isset($_FILES) && isset($_POST) && !empty($_FILES) )
         {
-            $this->JS .= Helper::jsScript("swfobject.js");
-            $this->JS .= Helper::jsScript("jquery.strobemediaplayback.js");
-            $this->JS .= Helper::jsScript("video.js");            
+            $this->JS .= Helper::jsScript("upload.js");
+
             // we need a better mime type checks i guess
             
             // $allowedFileExtension = array("avi", "mov", "mpeg", "flv");
-            
+           
             $tmpVideoName = md5(microtime());
+            
             move_uploaded_file($_FILES['file_upload']['tmp_name'], Config::get('basedir') . "/public/upload/" . $tmpVideoName);
+            
             $ffmpeg = new FFmpeg(Config::get('basedir') . "/public/upload/" . $tmpVideoName);
             $ffmpeg->getFileInformation();
             $ffmpeg->createThumbnail();
-            //$ffmpeg->convertVideo("webm"); 
+
             $this->showUpload=false;
-            $this->pid = $ffmpeg->convertVideo("mp4");
-            $this->thumb = Config::get('address') . "/public/upload/" . $tmpVideoName;
+
+            $this->thumbnails = array(Config::get('address') . "/public/upload/" . $tmpVideoName. "_thumbs1/00000001.png", 
+                                      Config::get('address') . "/public/upload/" . $tmpVideoName. "_thumbs2/00000001.png",
+                                      Config::get('address') . "/public/upload/" . $tmpVideoName. "_thumbs3/00000001.png");
             $this->filename = $tmpVideoName;
+            $this->showAlert = true;
+            $this->success=_("Please enter the Title and Description of your Video");
         }
     }
     
     
  
-    /**
-     * @todo sanitize input
-     */
-    function checkStatus()
-    {
-       
-        if(is_numeric($_GET['pid']) && FFmpeg::isProcessRunning($_GET['pid'])){
-            $this->json=array("isConverted" => false);
-        }else
-        {
-            FFmpeg::markFinished(Config::get('basedir') . "/public/upload/".$_GET['video']);
-            $this->json=array("isConverted" => true);
-        }
-         
-        
-    }
+ 
     
     
     function delete(){
@@ -116,41 +108,72 @@ class Video_Manager
                 $video->title = $_POST['title'];
                 $video->descripton = $_POST['description'];
                 $video->user_id = $_SESSION['user_id'];
-                $video->enabled = 1;
+                $video->isConverted = 0;
+                $video->filename =  $_POST['filename'] ;
+                $video->thumb = $_POST['thumb'];
                 $video->visibility_setting= $_POST['visibility'];
                 $video->save();
-                
-                if(!is_dir(Config::get('basedir') . "/public/video/".$_SESSION['user_id']))
-                {
-                    mkdir(Config::get('basedir') . "/public/video/".$_SESSION['user_id']);
-                }
-                if(!is_dir(Config::get('basedir') . "/public/video/".$_SESSION['user_id']."/".$video->id))
-                {
-                    mkdir(Config::get('basedir') . "/public/video/".$_SESSION['user_id']."/".$video->id);
-                }
-                rename(Config::get('basedir') . "/public/upload/".$_POST['filename'].".mp4", 
-                        Config::get('basedir') . "/public/video/".$_SESSION['user_id']."/".$video->id."/".$video->id.".mp4");
-                
-                rename(Config::get('basedir') . "/public/upload/".$_POST['filename'], 
-                        Config::get('basedir') . "/public/video/".$_SESSION['user_id']."/".$video->id."/".$video->id.".basefile");
-                
-                rename(Config::get('basedir') . "/public/upload/".$_POST['filename']."_thumbs1/00000001.png", 
-                        Config::get('basedir') . "/public/video/".$_SESSION['user_id']."/".$video->id."/thumb1.png");
-                rename(Config::get('basedir') . "/public/upload/".$_POST['filename']."_thumbs2/00000001.png", 
-                        Config::get('basedir') . "/public/video/".$_SESSION['user_id']."/".$video->id."/thumb2.png");
-                rename(Config::get('basedir') . "/public/upload/".$_POST['filename']."_thumbs3/00000001.png", 
-                        Config::get('basedir') . "/public/video/".$_SESSION['user_id']."/".$video->id."/thumb3.png");
-                
-                unlink(Config::get('basedir') . "/public/upload/".$_POST['filename']."_thumbs1/00000001.png");
-                unlink(Config::get('basedir') . "/public/upload/".$_POST['filename']."_thumbs2/00000001.png");
-                unlink(Config::get('basedir') . "/public/upload/".$_POST['filename']."_thumbs3/00000001.png");
-                rmdir(Config::get('basedir') . "/public/upload/".$_POST['filename']."_thumbs1");
-                rmdir(Config::get('basedir') . "/public/upload/".$_POST['filename']."_thumbs2");
-                rmdir(Config::get('basedir') . "/public/upload/".$_POST['filename']."_thumbs3");
-                
+                header("Location: " .Config::get('address')."/user/video");
                 
             }
         }
     }
+    
+    
+    function edit(){
+        $this->JS .= Helper::jsScript("upload.js");
+        
+        $this->showUpload=false;
+        $video = new Video($_GET['id']);
+        $this->video=$video;
+        $this->editMode=true;
+        $this->thumbnails = array(Config::get('address') . "/public/video/" . $video->user_id. "/" . $video->id. "/thumb1.png", 
+                                    Config::get('address') . "/public/video/" . $video->user_id. "/" . $video->id. "/thumb2.png",
+                                    Config::get('address') . "/public/video/" . $video->user_id. "/" . $video->id. "/thumb3.png");
+    }
+    
+    
+    function update()
+    {
+        if($_POST['delete']=="true")
+        {
+            $video=new Video($_POST['id']);
+            $video->user_id = $_SESSION['user_id'];
+            
+            $video->del_save();
+            
+        }
+        
+        if(isset($_POST)  && !empty($_POST)){
+            $error=false;
+            if(!$_POST['title'] || empty($_POST['title']))
+            {
+                $error=true;
+            }
+            if(!$_POST['description'] || empty($_POST['description']))
+            {
+                $error=true;
+            }   
+            
+            
+            if($error==false)
+            {
+                
+                $video = new Video($_POST['id']);
+                if($video->user_id == $_SESSION['user_id'])
+                {
+                    $video->title = $_POST['title'];
+                    $video->descripton = $_POST['description'];
+                    $video->visibility_setting= $_POST['visibility'];
+                    $video->thumb = $_POST['thumb'];
+                    $video->save();
+                    header("Location: " .Config::get('address')."/user/video");
+                }
+                
+            }
+        }
+        var_dump($_POST);
+    }
+    
 }
 ?>

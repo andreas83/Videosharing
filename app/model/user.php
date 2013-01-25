@@ -123,7 +123,7 @@ class User extends BaseApp
     public function get_list( $data = '' )
     {
         
-
+        
         $obj = $this->cache->get(__CLASS__ . '_list' . md5(serialize($data)));
         if ( !empty($obj) ) return unserialize($obj);
         
@@ -174,7 +174,7 @@ class User extends BaseApp
         
         $sql = "SELECT u.id, u.group_id, u.username, u.password, u.email, u.firstname, u.lastname, u.info FROM user as u WHERE
         u.id = $this->id";
-        if ( !($result = unserialize(__CLASS__ . '_' . $this->cache->get(md5($sql)))) )
+        if ( !($result = unserialize($this->cache->get(__CLASS__ . '_' . md5($sql)))) )
         {
             $stmt = $this->dbh->query($sql);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
