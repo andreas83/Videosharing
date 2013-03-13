@@ -131,7 +131,7 @@ class Video_Manager
                 $video->user_id = $_SESSION['user_id'];
                 $video->isConverted = 0;
                 $video->filename =  $_POST['filename'] ;
-                $video->thumb = $_POST['thumb'];
+                $video->thumb = (isset($_POST['thumb']) ? $_POST['thumb'] : "1");
                 $video->visibility_setting= $_POST['visibility'];
                 $video->save();
                 header("Location: " .Config::get('address')."/user/video");
@@ -187,7 +187,7 @@ class Video_Manager
                     $video->title = $_POST['title'];
                     $video->descripton = $_POST['description'];
                     $video->visibility_setting= $_POST['visibility'];
-                    $video->thumb = $_POST['thumb'];
+                    $video->thumb = (isset($_POST['thumb']) ? $_POST['thumb'] : "1");
                     $video->save();
                     header("Location: " .Config::get('address')."/user/video");
                 }
