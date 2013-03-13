@@ -13,7 +13,7 @@ foreach($data as $row)
               
               <img src="/public/video/<?=$row->user_id;?>/<?=$row->id; ?>/thumb<?=$row->thumb; ?>.png" width="100" class="img-rounded">
               <h2><?=$row->title; ?></h2>
-              <p><a class="btn" href="#">View Video </a></p>
+              <p><a class="btn" href="/video/view?id=<?=$row->id; ?>">View Video </a></p>
             </div><!--/span-->
    
 <?
