@@ -6,8 +6,6 @@ class Video_Manager
 
         $this->Template["index"] = "index.php";
         $this->Template["upload"] = "upload.php";
-        $this->Template["checkStatus"] = "json.php";
-        $this->Template["uploadProgress"] = "json.php";
         $this->Template["save"] = "upload.php";
         $this->Template["edit"] = "upload.php";
         $this->Template["update"] = "upload.php";
@@ -31,18 +29,14 @@ class Video_Manager
     {
 
         $this->Title = "Upload";
-//        uploadify just works with old jquery versions...
-//        $this->JS = Helper::jsScript("jquery.uploadify.min");
-//        $this->JS .= Helper::jsScript("upload.js");
-//        $this->CSS = Helper::cssScript("uploadify.css");
 
-        
-        
-        
-        
+         $this->JS .= Helper::jsScript("jquery.ui.widget.js");
+         $this->JS .= Helper::jsScript("jquery.iframe-transport.js");
+         $this->JS .= Helper::jsScript("jquery.fileupload.js");
+         $this->JS .= Helper::jsScript("upload.js");
+
         if ( isset($_FILES) && isset($_POST) && !empty($_FILES) )
         {
-            $this->JS .= Helper::jsScript("upload.js");
 
             // we need a better mime type checks i guess
             
@@ -55,7 +49,6 @@ class Video_Manager
             $ffmpeg = new FFmpeg(Config::get('basedir') . "/public/upload/" . $tmpVideoName);
             $ffmpeg->getFileInformation();
             $ffmpeg->createThumbnail();
-
             $this->showUpload=false;
 
             $this->thumbnails = array(Config::get('address') . "/public/upload/" . $tmpVideoName. "_thumbs1/00000001.png", 
@@ -64,13 +57,13 @@ class Video_Manager
             $this->filename = $tmpVideoName;
             $this->showAlert = true;
             $this->success=_("Please enter the Title and Description of your Video");
+
+
         }
+        
     }
-    
-    
- 
- 
-    
+
+
     
     function delete(){
         $video=new Video($_GET['id']);
