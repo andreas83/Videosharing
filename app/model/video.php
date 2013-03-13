@@ -172,7 +172,7 @@ class Video extends BaseApp {
         
         if($limit != false)
         {
-            $sql .=' order by v.id limit '.$limit;
+            $sql .=' order by v.id desc limit '.$limit;
         }
         
         $stmt = $this->dbh->query($sql);
