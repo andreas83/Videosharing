@@ -1,4 +1,5 @@
-<?php
+<h1>Recent Videos
+</h1><?php
 $video = new Video();
 $data=$video->get_list(array("isConverted" => 1, "visibility_setting" => 1), 6);
 $i=0;
