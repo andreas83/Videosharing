@@ -256,6 +256,9 @@ class User extends BaseApp
         $stmt->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
         $stmt->bindValue(':info', $this->info, PDO::PARAM_STR);
         $stmt->execute();
+        if (empty($this->id)) {
+         $this->id = $this->dbh->lastInsertId();
+        }
     }
 }
 ?>
