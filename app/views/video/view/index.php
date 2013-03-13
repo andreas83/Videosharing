@@ -1,7 +1,7 @@
 
 <?php
 
-if($view->error)
+if(isset($view->error) && !empty($view->error))
 {
 
     

@@ -13,10 +13,11 @@ class Video_View
     function index()
     {
   
-        $this->JS .= Helper::jsScript("swfobject.js");
-        $this->JS .= Helper::jsScript("jquery.strobemediaplayback.js");        
-        $this->JS .= Helper::jsScript("myvideo.js");  
         
+//        $this->JS .= Helper::jsScript("swfobject.js");
+//        $this->JS .= Helper::jsScript("jquery.strobemediaplayback.js");        
+//        $this->JS .= Helper::jsScript("myvideo.js");  
+//        
 //        $this->JS .= Helper::jsScript("jquery-ui.js");        
 //        $this->JS .= Helper::jsScript("jquery.acornmediaplayer.js");        
 //        $this->JS .= Helper::jsScript("html5player.js");  
@@ -40,6 +41,7 @@ class Video_View
         $this->user_id=$video->user_id;
         $this->id=$video->id;
         $this->title = $video->title;
+        $this->Title = $video->title;
         $this->desc = $video->descripton;
         $this->thumb = $video->thumb;
 
