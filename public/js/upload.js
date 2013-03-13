@@ -2,7 +2,7 @@ $(function() {
     if($('#upload_form').length!=0)
     {
     $('#upload_form').fileupload({
-        dataType: 'html',
+        dataType: 'json',
         add: function (e, data) {
             data.context = $('<button class="btn btn-inverse"/>').text('Upload')
                 .appendTo("#upload_form")
@@ -11,8 +11,11 @@ $(function() {
                     data.submit();
                 });
         },
+        stop: function (e, data) {
+            alert(e.data);
+        },
         done: function (e, data) {
-		jQuery("html").html(data.result);
+		window.location ="/video/manager/editFile?video_id="+data.result.tmpFile;
         },
         progressall: function (e, data) {
         var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -23,6 +26,7 @@ $(function() {
         }
     });
     }
+    
     var selectedThumb=$("#thumb").val();
     var i=0;
     $(".thumbnail").each(function(){

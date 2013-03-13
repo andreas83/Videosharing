@@ -1,7 +1,7 @@
 <?
 if ($view->showUpload==true):?>
 
-<form method="POST" action="<?php echo Config::get('address'); ?>/video/manager/upload" id="upload_form" enctype="multipart/form-data">
+<form method="POST" action="<?php echo Config::get('address'); ?>/video/manager/uploadFile" id="upload_form" enctype="multipart/form-data">
 
     <input id="file_upload" name="file_upload" type="file" multiple="true">
 </form>
@@ -13,7 +13,7 @@ if ($view->showUpload==true):?>
 <?php
 if ($view->showUpload==false):?>
 <?php 
-if ($view->showAlert==true):?>
+if (isset($view->showAlert) && $view->showAlert==true):?>
     <div class="alert alert-info">
      <button type="button" class="close" data-dismiss="alert">&times;</button>
      <?php echo $view->success; ?><br/>
@@ -66,7 +66,7 @@ if ($view->showAlert==true):?>
 
 
         <div class="form-actions">
-            <input type="hidden" name="filename" value="<?= $view->filename; ?>">
+            <input type="hidden" name="filename" value="<?= (isset($view->filename) ? $view->filename :"" ); ?>">
             <input type="hidden" id="thumb" name="thumb" value="<?= (isset($view->video->thumb) ? $view->video->thumb : "1") ; ?>">
             <input type="submit" class="btn btn-primary" value="<?php echo _("Save Changes"); ?>">
             <?

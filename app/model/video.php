@@ -148,7 +148,7 @@ class Video extends BaseApp {
      *
      * @return obj
      */
-    public function get_list ($data = '')
+    public function get_list ($data = '', $limit = false)
     {
         
         $obj = $this->cache->get(__CLASS__ . '_list' . md5(serialize($data)));
@@ -168,6 +168,11 @@ class Video extends BaseApp {
             }
             
             $sql = substr($sql, 0, -4);
+        }
+        
+        if($limit != false)
+        {
+            $sql .=' limit '.$limit;
         }
         
         $stmt = $this->dbh->query($sql);

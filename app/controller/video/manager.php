@@ -9,6 +9,10 @@ class Video_Manager
         $this->Template["save"] = "upload.php";
         $this->Template["edit"] = "upload.php";
         $this->Template["update"] = "upload.php";
+        $this->Template['uploadFile'] = "json.php";
+        $this->Template['editFile'] = "upload.php";
+        
+        
         $this->showUpload=true;
     }
 
@@ -16,7 +20,7 @@ class Video_Manager
     function index()
     {
 
-        $this->title = "Overview";
+        $this->Title = "Overview";
         $this->sub_headline = "Overview";
     }
 
@@ -35,6 +39,13 @@ class Video_Manager
          $this->JS .= Helper::jsScript("jquery.fileupload.js");
          $this->JS .= Helper::jsScript("upload.js");
 
+
+        
+    }
+    
+    
+    function uploadFile()
+    {
         if ( isset($_FILES) && isset($_POST) && !empty($_FILES) )
         {
 
@@ -49,17 +60,34 @@ class Video_Manager
             $ffmpeg = new FFmpeg(Config::get('basedir') . "/public/upload/" . $tmpVideoName);
             $ffmpeg->getFileInformation();
             $ffmpeg->createThumbnail();
-            $this->showUpload=false;
 
-            $this->thumbnails = array(Config::get('address') . "/public/upload/" . $tmpVideoName. "_thumbs1/00000001.png", 
-                                      Config::get('address') . "/public/upload/" . $tmpVideoName. "_thumbs2/00000001.png",
-                                      Config::get('address') . "/public/upload/" . $tmpVideoName. "_thumbs3/00000001.png");
-            $this->filename = $tmpVideoName;
-            $this->showAlert = true;
-            $this->success=_("Please enter the Title and Description of your Video");
+            
+            $this->json = array("tmpFile"=>$tmpVideoName);
 
 
         }
+    }
+    
+    function editFile()
+    {
+        $this->JS .= Helper::jsScript("upload.js");
+        $this->Title = "Edit Video";
+        
+        
+        $tmpVideoName=$_GET['video_id'];
+        
+        $this->showUpload=false;
+        $this->editMode=false;        
+        
+        $this->thumbnails = array(Config::get('address') . "/public/upload/" . $tmpVideoName. "_thumbs1/00000001.png", 
+                                  Config::get('address') . "/public/upload/" . $tmpVideoName. "_thumbs2/00000001.png",
+                                  Config::get('address') . "/public/upload/" . $tmpVideoName. "_thumbs3/00000001.png");
+        $this->filename = $tmpVideoName;
+        $this->showAlert = true;
+        $this->success=_("Please enter the Title and Description of your Video");
+        $video = new Video();
+        $this->video=$video;
+           
         
     }
 
@@ -115,7 +143,7 @@ class Video_Manager
     
     function edit(){
         $this->JS .= Helper::jsScript("upload.js");
-        
+        $this->Title = "Edit Video";
         $this->showUpload=false;
         $video = new Video($_GET['id']);
         $this->video=$video;
@@ -123,6 +151,7 @@ class Video_Manager
         $this->thumbnails = array(Config::get('address') . "/public/video/" . $video->user_id. "/" . $video->id. "/thumb1.png", 
                                     Config::get('address') . "/public/video/" . $video->user_id. "/" . $video->id. "/thumb2.png",
                                     Config::get('address') . "/public/video/" . $video->user_id. "/" . $video->id. "/thumb3.png");
+        
     }
     
     
