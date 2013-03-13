@@ -74,7 +74,7 @@
                      
 
                         <input class="btn btn-primary" type="submit" name="submit" value="Sign In" />
-                        <input class="btn btn-success" type="button" name="click" onclick="location.href='<?php echo Config::get('address'); ?>/user/register'" value="Register" />
+
                       </form>
                         
                         </li>
@@ -95,8 +95,8 @@
         <li><a href="<?php echo Config::get('address'); ?>/user/video"><?php echo _("My Videos"); ?></a></li>
         <li><a href="<?php echo Config::get('address'); ?>/user/logout"><?php echo _("Logout"); ?></a></li>
         <? else: ?>
-        <li><a href="<?php echo Config::get('address'); ?>/user/register"><?php echo _("Register"); ?></a></li>
-        <li><a href="<?php echo Config::get('address'); ?>/user/login"><?php echo _("Login"); ?></a></li>
+        
+        <li><a href="<?php echo Config::get('address'); ?>/user/login"><?php echo _("SignIn"); ?></a></li>
         <? endif; ?>
     </ul>
     </div>
