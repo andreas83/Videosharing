@@ -57,7 +57,7 @@ foreach ($view->obj as $key)
     ?>
     
     <div class="span3">
-        <a href="<?php echo Config::get('address'); ?>/video/view?id=<?= $key->id; ?>"><img class="img-polaroid" src="<?php echo Config::get('address'); ?>/public/video/<?php echo $key->user_id; ?>/<?= $key->id; ?>/thumb<?=$key->thumb;?>.png"></a>
+        <a href="<?php echo Config::get('address'); ?>/video/view?id=<?= $key->id; ?>"><img class="img-polaroid" src="<?php echo Config::get('address'); ?>/video/view/thumbnail?id=<?= $key->id; ?>&width=380&height=200"></a>
     </div>
     <div class="span5">
         <h2><a href="<?php echo Config::get('address'); ?>/video/view?id=<?= $key->id; ?>"><?php echo $key->title;  ?></a></h2> 
