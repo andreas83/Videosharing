@@ -6,6 +6,7 @@ class Video_View
     {
 
         $this->Template["index"] = "index.php";
+        $this->Template["thubnail"] = false;
 
     }
 
@@ -45,6 +46,24 @@ class Video_View
         $this->desc = $video->descripton;
         $this->thumb = $video->thumb;
 
+    }
+    function thumbnail()
+    {
+	$video = new Video($_GET['id']);
+	$img= Config::get("basedir")."/public/video/".$video->user_id."/".$video->id."/thumb".$video->thumb.".png";
+
+	$image = new Image($img);
+
+
+	if(isset($_GET['width']) && is_numeric($_GET['width']) && isset($_GET['height']) && is_numeric($_GET['height']))
+	{
+        	$image->resize($_GET['width'], $_GET['height'], "crop");
+	}
+	$offset = 300 * 60 * 60;
+	$expire = "expires: " . gmdate ("D, d M Y H:i:s", time() + $offset) . " GMT";
+	header ($expire);
+	$image->display();
+	die();
     }
 }
 ?>
