@@ -1,7 +1,7 @@
 <div class="row-fluid"><h1>Recent Videos</h1></div>
 <?php
 $video = new Video();
-$data=$video->get_list(array("isConverted" => 1, "visibility_setting" => 1), 6);
+$data=$video->get_list(array("isConverted" => 1, "visibility_setting" => 1), 9);
 $i=0;
 foreach($data as $row) 
 {
@@ -11,11 +11,9 @@ foreach($data as $row)
 ?>
 
             <div class="span4">
-              
-              <img src="/public/video/<?=$row->user_id;?>/<?=$row->id; ?>/thumb<?=$row->thumb; ?>.png" width="100" class="img-rounded">
-              <h2><?=$row->title; ?></h2>
-              <p><a class="btn" href="/video/view?id=<?=$row->id; ?>">View Video </a></p>
-            </div><!--/span-->
+              <a href="/video/view?id=<?=$row->id; ?>"><img src="/video/view/thumbnail?id=<?=$row->id; ?>&amp;width=200&amp;height=100" width="200" height="100" class="img-polaroid" alt="thumbnail of <?=$row->title; ?>" /></a>
+              <h3><a href="/video/view?id=<?=$row->id; ?>"><?=$row->title; ?></a></h3>
+            </div>
    
 <?
   if(($i%3)==0)
