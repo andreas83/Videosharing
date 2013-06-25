@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `info` longtext,
   PRIMARY KEY (`id`,`group_id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -27,5 +27,5 @@ CREATE TABLE IF NOT EXISTS `video` (
   `isConverted` tinyint(4) NOT NULL DEFAULT '0',
   `thumb` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 

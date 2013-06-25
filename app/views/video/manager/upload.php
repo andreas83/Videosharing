@@ -1,15 +1,14 @@
 <?
 if ($view->showUpload==true):?>
-
 <form method="POST" action="<?php echo Config::get('address'); ?>/video/manager/uploadFile" id="upload_form" enctype="multipart/form-data">
 
-    <input id="file_upload" name="file_upload" type="file" multiple="true">
+    <input id="file_upload" name="file_upload" type="file" multiple="false">
 </form>
 <div class="progress progress-striped active">
     <div class="bar" style="width: 0%;"></div>
 </div>
 <? endif; ?>
-        
+
 <?php
 if ($view->showUpload==false):?>
 <?php 

@@ -9,9 +9,6 @@ class User_Video {
     
     function index(){
         $video = new Video();
-        $this->JS .= Helper::jsScript("swfobject.js");
-        $this->JS .= Helper::jsScript("jquery.strobemediaplayback.js");        
-        $this->JS .= Helper::jsScript("myvideo.js");  
         
         
         if(!isset($_SESSION['user_id']) || empty($_SESSION['user_id']))
