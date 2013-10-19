@@ -18,7 +18,7 @@ class Config
      *
      * @var string
      */
-    CONST PATH_PATTERN = 'videostream/app/config';
+    CONST PATH_PATTERN = '/app/config';
 
 
     /**
