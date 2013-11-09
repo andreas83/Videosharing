@@ -74,7 +74,14 @@ class Config_Node {
         $this->__init_type($value);
 
         // set id as a md5 hash
-        $this->id = (!empty($this->parent_node)) ? md5($this->parent_node->id.$key.$value) : $this->id = md5(null.$key.$value);
+        if (is_scalar($value)) {
+            $this->id = (!empty($this->parent_node)) ? md5($this->parent_node->id.$key.$value) : $this->id = md5(null.$key.$value);
+        }
+        else
+        {
+            $this->id = (!empty($this->parent_node)) ? md5($this->parent_node->id.$key.serialize($value)) : $this->id = md5(null.$key.$value);
+        }
+
         // optional comment
         $this->comment = $comment;
 
@@ -90,6 +97,8 @@ class Config_Node {
      */
     private function __init_type($value)
     {
+        if (!is_string($value)) return true;
+
         // check if it's not a json array or object
         if ( strpos( trim( $value ), '[' ) === 0 || strpos( trim( $value ), '{' ) === 0 )
         {
