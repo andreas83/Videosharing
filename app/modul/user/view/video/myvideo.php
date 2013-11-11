@@ -57,10 +57,12 @@ foreach ($view->obj as $key) {
 }
 if (count($view->obj) == 0 && count($view->inProgress) == 0):
     ?>
+<div class="row">
     <div class="alert alert-info">
         <h2><?php echo _("Ohoh, you did not Upload any Video so far"); ?></h2>
         <button class="button" onclick="location.href='<?php echo Config::get('address'); ?>/video/manager/upload'" ><?php echo _("Upload Now"); ?></button>
     </div>
+</div>
 <? endif;
 ?>
 
