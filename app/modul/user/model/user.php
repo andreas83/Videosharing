@@ -169,7 +169,7 @@ class User extends BaseApp
      */
     public function get()
     {
-
+        echo "uhu";
         if ( empty($this->id) || !is_numeric($this->id) ) return false;
         
         $sql = "SELECT u.id, u.group_id, u.username, u.password, u.email, u.firstname, u.lastname, u.info FROM user as u WHERE

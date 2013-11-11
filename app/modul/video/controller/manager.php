@@ -157,7 +157,12 @@ class Video_Manager
     
     function update()
     {
-        if($_POST['delete']=="true")
+        if(!isset($_SESSION['user_id']) && !is_numeric($_SESSION['user_id']))
+        {
+            header("Location: /user/login");
+        }
+        
+        if(isset($_POST['delete']) && $_POST['delete']=="true")
         {
             $video=new Video($_POST['id']);
             $video->user_id = $_SESSION['user_id'];
@@ -194,7 +199,7 @@ class Video_Manager
                 
             }
         }
-        var_dump($_POST);
+        
     }
     
 }

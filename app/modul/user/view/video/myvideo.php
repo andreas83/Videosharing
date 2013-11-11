@@ -11,7 +11,7 @@ if(isset($view->error) && !empty($view->error))
         echo "</div>";
         echo '<div class="row">
                 <div class="col-md-1">
-                  <form method="get" action="'. Config::get('address').'/user/register">
+                  <form method="get" action="'. Config::get('address').'/user/login">
                     <input class="btn btn-large btn-primary" type="submit"  value="'. _("Register").' ">
                   </form></div>
                 <div class="col-md-1">
@@ -35,7 +35,7 @@ if( count($view->inProgress)>0):
         
     </div>
 <? endif; ?>
-<div class="containter">
+<div class="container">
 <?php
 foreach ($view->obj as $key)
 {
@@ -57,7 +57,7 @@ foreach ($view->obj as $key)
     ?>
     
     <div class="col-md-3">
-        <a href="<?php echo Config::get('address'); ?>/video/view?id=<?= $key->id; ?>"><img class="img-polaroid" src="<?php echo Config::get('address'); ?>/video/view/thumbnail?id=<?= $key->id; ?>&width=380&height=200"></a>
+        <a href="<?php echo Config::get('address'); ?>/video/view?id=<?= $key->id; ?>"><img class="img-thumbnail" src="<?php echo Config::get('address'); ?>/video/view/thumbnail?id=<?= $key->id; ?>&width=380&height=200"></a>
     </div>
     <div class="col-md-5">
         <h2><a href="<?php echo Config::get('address'); ?>/video/view?id=<?= $key->id; ?>"><?php echo $key->title;  ?></a></h2> 

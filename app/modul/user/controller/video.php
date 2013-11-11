@@ -14,7 +14,7 @@ class User_Video {
         if(!isset($_SESSION['user_id']) || empty($_SESSION['user_id']))
         {
             $this->error="Please Login";
-            
+            return;            
         }
         
         $this->inProgress = $video->get_list(array("isConverted"=>"0", "user_id" => $_SESSION['user_id']));

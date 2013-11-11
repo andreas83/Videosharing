@@ -15,7 +15,7 @@ $(function() {
             alert(e.data);
         },
         done: function (e, data) {
-		window.location ="/video/manager/editFile?video_id="+data.result.tmpFile;
+            window.location ="/video/manager/editFile?video_id="+data.result.tmpFile;
         },
         progressall: function (e, data) {
         var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -29,20 +29,20 @@ $(function() {
     
     var selectedThumb=$("#thumb").val();
     var i=0;
-    $(".thumbnail").each(function(){
+    $(".video-thumbnail").each(function(){
         i++;
         if(i==selectedThumb)
-            $(this).find("img").css("border-bottom", "4px solid #FF0000");
+            $(this).css("border-bottom", "4px solid #FF0000");
         
     });
    
     
-   $(".thumbnail").click(
+   $(".video-thumbnail").click(
     function(){
-        $(".thumb").css("border", "0px solid #ccc");
+        $(".video-thumbnail").css("border", "0px solid #ccc");
         
-        $(this).find("img").css("border-bottom", "4px solid #FF0000");
-        $("#thumb").val($(this).find("img").attr("thumb"));
+        $(this).css("border-bottom", "4px solid #FF0000");
+        $("#thumb").val($(this).attr("thumb"));
     }
     ); 
     
