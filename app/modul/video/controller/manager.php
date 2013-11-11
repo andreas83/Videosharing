@@ -34,10 +34,7 @@ class Video_Manager
 
         $this->Title = "Upload";
 
-         $this->JS .= Helper::jsScript("jquery.ui.widget.js");
-         $this->JS .= Helper::jsScript("jquery.iframe-transport.js");
-         $this->JS .= Helper::jsScript("jquery.fileupload.js");
-         $this->JS .= Helper::jsScript("upload.js");
+        $this->JS .= Helper::jsScript("upload.js");
 
 
         
