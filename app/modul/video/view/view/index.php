@@ -21,28 +21,32 @@ if (isset($view->error) && !empty($view->error)) {
 ?>
 
 <div class="row">
-    <video video="<?= $view->id; ?>" width="640" height="380" controls="controls"  poster="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?= $view->id; ?>/thumb<?php echo $view->thumb; ?>.png">
-        <source src="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?= $view->id; ?>/<?= $view->id; ?>.mp4" type="video/mp4">          
-        <source src="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?= $view->id; ?>/<?= $view->id; ?>.webm" type="video/webm">
+    <div class="col-md-12">
+        <video video="<?= $view->id; ?>" width="640" height="380" controls="controls"  poster="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?= $view->id; ?>/thumb<?php echo $view->thumb; ?>.png">
+            <source src="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?= $view->id; ?>/<?= $view->id; ?>.mp4" type="video/mp4">          
+            <source src="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?= $view->id; ?>/<?= $view->id; ?>.webm" type="video/webm">
 
-        <div class="mediaplayback" id="<?= $view->id; ?>" uid="<?php echo $view->user_id; ?>" video="<?= $view->id; ?>" thumb="<?= $view->thumb; ?>" style="width:640; height:480"></div>
+            <div class="mediaplayback" id="<?= $view->id; ?>" uid="<?php echo $view->user_id; ?>" video="<?= $view->id; ?>" thumb="<?= $view->thumb; ?>" style="width:640; height:480"></div>
 
-    </video> 
-
-
+        </video> 
+    </div>
 </div>
 <div class="row">
-    <h1><?php echo $view->title; ?>
-<? if (isset($_SESSION['user_id']) && $view->user_id == $_SESSION['user_id']): ?>
-            <form method="get" action="<?php echo Config::get('address'); ?>/video/manager/edit">
-                <input type="hidden" name="id" value="<?= $view->id; ?>">
-                <input class="btn btn-info" type="submit"  value="<? echo _("Edit"); ?> ">
-            </form>
-        <? endif; ?>
-    </h1> 
+    <div class="col-md-12">
+        <h1><?php echo $view->title; ?>
+            <? if (isset($_SESSION['user_id']) && $view->user_id == $_SESSION['user_id']): ?>
+                <form method="get" action="<?php echo Config::get('address'); ?>/video/manager/edit">
+                    <input type="hidden" name="id" value="<?= $view->id; ?>">
+                    <input class="btn btn-info" type="submit"  value="<? echo _("Edit"); ?> ">
+                </form>
+            <? endif; ?>
+        </h1>
+    </div>
 </div>
 <div class="row">
+    <div class="col-md-12">
         <?
         echo $view->desc;
         ?>
+    </div>
 </div>

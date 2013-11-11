@@ -1,11 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+<!DOCTYPE html>
+<html>
     <head>
         <title><?php echo $view->Title; ?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <link rel="stylesheet" href="<?php echo Config::get('address'); ?>/public/css/default.css" type="text/css"/>
         <link rel="stylesheet" href="<?php echo Config::get('address'); ?>/public/css/bootstrap.min.css" type="text/css"/>
-        <base id="base" href="<?php echo Config::get('address'); ?>"></base>
+        <base id="base" href="<?php echo Config::get('address'); ?>" />
 
         <script src="<?php echo Config::get('address'); ?>/public/js/jquery.js" type="text/javascript"></script>
         <?php
@@ -30,21 +30,17 @@
                 <a class="navbar-brand" href="#">Videomanager</a>
             </div>
             
-            
-           
-            
-            
-            
         </nav>
-
+        <div class="containter">
         
             <div class="row">
-                <div class="col-md-2">
-                    <ul class="nav nav-tabs nav-stacked">
+                <div class="col-xs-6 col-sm-2" rol="navigation">
+                    <ul class="nav nav-pills nav-stacked">
                         <?
                         if (isset($_SESSION['user'])):
                             ?>        
                             <li><a href="<?php echo Config::get('address'); ?>/user/video"><?php echo _("My Videos"); ?></a></li>
+                            <li><a href="<?php echo Config::get('address'); ?>/video/manager/upload"><?php echo _("Upload"); ?></a></li>
                             <li><a href="<?php echo Config::get('address'); ?>/user/logout"><?php echo _("Logout"); ?></a></li>
                         <? else: ?>
 
@@ -53,7 +49,7 @@
                     </ul>
                 </div>
             
-                <div class="col-md-10">
+                <div class="col-xs-12 col-sm-9">
 
                     <? /*
 

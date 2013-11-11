@@ -28,7 +28,7 @@ try {
     {
         if ( !in_array(end($modul), Config::get('allowed')) && !isset($_SESSION['login']) && Config::get('permisssion') != false )
         {
-            header('Location: /Benutzer/Anmelden');
+            header('Location: /user/login');
         }
         else
         {
@@ -53,7 +53,7 @@ try {
         if ( !in_array(end($modul), Config::get('allowed')) && !isset($_SESSION['login']) && Config::get('permisssion') != false )
         {
 
-            header('Location: /Benutzer/Anmelden');
+            header('Location: /user/login');
             die();
         }
 
@@ -74,7 +74,7 @@ try {
         if ( !in_array(end($modul), Config::get('allowed')) && !isset($_SESSION['login']) && Config::get('permisssion') != false )
         {
 
-            header('Location: /Benutzer/Anmelden');
+            header('Location: /user/login');
         }
         else
         {
