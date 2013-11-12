@@ -2,7 +2,7 @@
 class User_Video {
 
     function __construct() {
-        $this->Template["index"] = "myvideo.php";
+        $this->Template["index"] = "index.php";
         $this->Title=_("My Video");
         
     }

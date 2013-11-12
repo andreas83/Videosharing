@@ -66,40 +66,43 @@ if (count($view->obj) == 0 && count($view->inProgress) == 0):
 <? endif;
 ?>
 
+<div class="row">
+    
 
-</div>
 <?
 if (count($view->obj) > 0):
     ?>
-    <div >
+    <div class="large-12 columns">
         <ul class="pagination">
     <?php
     if ($view->page == 1) {
         $url = "";
-        $class = "disabled";
+        $class = "unavailable";
     } else {
         $res = $view->page - 1;
         $url = Config::get('address') . "/user/video?page=" . $res;
     }
     ?>
-            <li><a class="<?php echo $class; ?>" href="<?php echo $url; ?>">&laquo;</a></li>
+            <li><h3><a class="<?php echo $class; ?>" href="<?php echo $url; ?>">&laquo;</a></h3></li>
             <?php
             foreach (range(1, $view->Seiten) as $number) {
-                echo "<li><a href=\"" . Config::get('address') . "/user/video?page=$number\">$number</a></li>";
+                echo "<li><h3><a href=\"" . Config::get('address') . "/user/video?page=$number\">$number</a></h3></li>";
             }
             ?>
             <?php
             if ($view->Seiten == $view->page) {
                 $url = "";
-                $class = "disabled";
+                $class = "unavailable";
             } else {
                 $res = $view->page + 1;
                 $url = "?page=" . $res;
             }
             ?>
-            <li><a class="<?php echo $class; ?>" href="<?php echo $url; ?>">&raquo;</a></li>
+            <li><h3><a class="<?php echo $class; ?>" href="<?php echo $url; ?>">&raquo;</a></h3></li>
         </ul>
 
             <?php
         endif;
         ?>
+    </div>
+</div>

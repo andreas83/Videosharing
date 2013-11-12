@@ -1,6 +1,10 @@
 <? if ($view->showUpload == true): ?>
     <div class="row">
-
+        <div class="large-12 columns">
+            
+            <h2>Upload <small>your Video</small></h2>
+        </div>
+        <div class="large-12 columns">
 
         <form method="POST" action="<?php echo Config::get('address'); ?>/video/manager/uploadFile" id="upload_form" enctype="multipart/form-data">
             <input id="file_upload" name="file_upload" type="file" multiple="false">
@@ -10,6 +14,7 @@
             </div>
             <span id="upload" class="small button">Upload</span>
         </form>
+        </div>
     </div>
 <? endif; ?>
 
