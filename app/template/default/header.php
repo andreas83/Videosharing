@@ -13,6 +13,9 @@
             .container{
                 margin-top:20px;
             }
+            .height-auto{
+                height:auto !important;
+            }
             </style>
         </head>
         <body>
