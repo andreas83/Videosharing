@@ -1,4 +1,3 @@
-
 <?php
 if (isset($view->error) && !empty($view->error)) {
 
@@ -20,9 +19,6 @@ if (isset($view->error) && !empty($view->error)) {
                </div>
               ';
 
-
-
-
     die();
 }
 
@@ -36,7 +32,7 @@ if (count($view->inProgress) > 0):
             </div>
         </div>
     </div>    
-<? endif; ?>
+<?php endif; ?>
 
 <?php
 foreach ($view->obj as $key) {
@@ -45,15 +41,15 @@ foreach ($view->obj as $key) {
     
 
         <div class="large-6 columns">
-            <a href="<?php echo Config::get('address'); ?>/video/view?id=<?= $key->id; ?>"><img class="img-thumbnail" src="<?php echo Config::get('address'); ?>/video/view/thumbnail?id=<?= $key->id; ?>&width=380&height=200"></a>
+            <a href="<?php echo Config::get('address'); ?>/video/view?id=<?php echo  $key->id; ?>"><img class="img-thumbnail" src="<?php echo Config::get('address'); ?>/video/view/thumbnail?id=<?php echo  $key->id; ?>&width=380&height=200"></a>
         </div>
         <div class="large-6 columns">
-            <h2><a href="<?php echo Config::get('address'); ?>/video/view?id=<?= $key->id; ?>"><?php echo $key->title; ?></a></h2> 
+            <h2><a href="<?php echo Config::get('address'); ?>/video/view?id=<?php echo  $key->id; ?>"><?php echo $key->title; ?></a></h2> 
             <p><?php echo $key->descripton; ?></p>
         </div>
 
     </div>
-    <?
+    <?php
 }
 if (count($view->obj) == 0 && count($view->inProgress) == 0):
     ?>
@@ -63,13 +59,13 @@ if (count($view->obj) == 0 && count($view->inProgress) == 0):
         <button class="button" onclick="location.href='<?php echo Config::get('address'); ?>/video/manager/upload'" ><?php echo _("Upload Now"); ?></button>
     </div>
 </div>
-<? endif;
+<?php endif;
 ?>
 
 <div class="row">
     
 
-<?
+<?php
 if (count($view->obj) > 0):
     ?>
     <div class="large-12 columns">
@@ -88,8 +84,7 @@ if (count($view->obj) > 0):
             foreach (range(1, $view->Seiten) as $number) {
                 echo "<li><h3><a href=\"" . Config::get('address') . "/user/video?page=$number\">$number</a></h3></li>";
             }
-            ?>
-            <?php
+
             if ($view->Seiten == $view->page) {
                 $url = "";
                 $class = "unavailable";

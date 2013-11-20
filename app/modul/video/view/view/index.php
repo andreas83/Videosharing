@@ -1,4 +1,3 @@
-
 <?php
 if (isset($view->error) && !empty($view->error)) {
 
@@ -28,27 +27,27 @@ if (isset($view->error) && !empty($view->error)) {
 
 <div class="row">
     <div class="large-12 columns flex-video">
-        <video video="<?= $view->id; ?>" width="640" height="380" controls="controls"  poster="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?= $view->id; ?>/thumb<?php echo $view->thumb; ?>.png">
-            <source src="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?= $view->id; ?>/<?= $view->id; ?>.mp4" type="video/mp4">          
-            <source src="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?= $view->id; ?>/<?= $view->id; ?>.webm" type="video/webm">
+        <video video="<?php echo $view->id; ?>" width="640" height="380" controls="controls"  poster="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?php echo $view->id; ?>/thumb<?php echo $view->thumb; ?>.png">
+            <source src="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?php echo $view->id; ?>/<?php echo $view->id; ?>.mp4" type="video/mp4">          
+            <source src="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?php echo $view->id; ?>/<?php echo $view->id; ?>.webm" type="video/webm">
         </video> 
     </div>
 </div>
 <div class="row">
     <div class="large-12 columns">
             <h1><?php echo $view->title; ?> </h1>
-            <? if (isset($_SESSION['user_id']) && $view->user_id == $_SESSION['user_id']): ?>
+            <?php if (isset($_SESSION['user_id']) && $view->user_id == $_SESSION['user_id']): ?>
                 <form method="get" action="<?php echo Config::get('address'); ?>/video/manager/edit">
-                    <input type="hidden" name="id" value="<?= $view->id; ?>">
-                    <input class="button" type="submit"  value="<? echo _("Edit"); ?> ">
+                    <input type="hidden" name="id" value="<?php echo $view->id; ?>">
+                    <input class="button" type="submit"  value="<?php echo _("Edit"); ?> ">
                 </form>
-            <? endif; ?>
+            <?php endif; ?>
        
     </div>
 
     <div class="large-12 columns">
         <p>
-        <?
+        <?php
         echo $view->desc;
         ?>
         </p>
