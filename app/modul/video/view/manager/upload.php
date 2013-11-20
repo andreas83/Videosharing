@@ -1,4 +1,4 @@
-<? if ($view->showUpload == true): ?>
+<?php if ($view->showUpload == true): ?>
     <div class="row">
         <div class="large-12 columns">
             
@@ -16,7 +16,7 @@
         </form>
         </div>
     </div>
-<? endif; ?>
+<?php endif; ?>
 
 <?php if ($view->showUpload == false): ?>
     <?php if (isset($view->showAlert) && $view->showAlert == true): ?>
@@ -29,43 +29,43 @@
                 </div>
             </div>
         </div>
-    <? endif; ?>   
+    <?php endif; ?>   
     <div class="row">
         <div class="large-12 columns">
-            <? if ($view->editMode) : ?>
+            <?php if ($view->editMode) : ?>
 
 
 
                 <form method="POST" action="<?php echo Config::get('address'); ?>/video/manager/update" enctype="multipart/form-data">
-                <? endif; ?>
-                <? if (!$view->editMode) : ?>
+                <?php endif; ?>
+                <?php if (!$view->editMode) : ?>
 
                     <form method="POST" action="<?php echo Config::get('address'); ?>/video/manager/save" enctype="multipart/form-data">
-                    <? endif; ?>
+                    <?php endif; ?>
 
-                    <label for="inputTitle"><? echo _("Title"); ?></label>
+                    <label for="inputTitle"><?php echo _("Title"); ?></label>
 
                     <input type="text"  id="inputTitle" name="title" placeholder="<?php echo _("Title"); ?>" value="<?php echo $view->video->title; ?>">
 
 
-                    <label  for="inputDescription"><? echo _("Description"); ?></label>
+                    <label  for="inputDescription"><?php echo _("Description"); ?></label>
 
                     <textarea id="inputDescription"  name="description" placeholder="<?php echo _("Description"); ?>"><?php echo $view->video->descripton; ?></textarea>
 
-                    <label ><? echo _("Visibility"); ?></label>
+                    <label ><?php echo _("Visibility"); ?></label>
 
 
                     <select name="visibility">
-                        <option <?= ($view->video->visibility_setting == "1" ? "selected" : "") ?> value="1"><? echo _("Everyone"); ?></option>
-                        <option <?= ($view->video->visibility_setting == "2" ? "selected" : "") ?> value="2"><? echo _("Just Registered Users"); ?></option>
-                        <option <?= ($view->video->visibility_setting == "3" ? "selected" : "") ?> value="3"><? echo _("Just me"); ?></option>
+                        <option <?php echo ($view->video->visibility_setting == "1" ? "selected" : "") ?> value="1"><?php echo _("Everyone"); ?></option>
+                        <option <?php echo ($view->video->visibility_setting == "2" ? "selected" : "") ?> value="2"><?php echo _("Just Registered Users"); ?></option>
+                        <option <?php echo ($view->video->visibility_setting == "3" ? "selected" : "") ?> value="3"><?php echo _("Just me"); ?></option>
                     </select>
 
 
 
 
 
-                    <label for="defaultImage"><? echo _("Select Default Image"); ?></label>
+                    <label for="defaultImage"><?php echo _("Select Default Image"); ?></label>
                     <div id="defaultImage" class="row">
 
                         <?php
@@ -80,13 +80,13 @@
                     
                     <div class="row"> 
                         <div class="large-12 columns">
-                            <input type="hidden" name="filename" value="<?= (isset($view->filename) ? $view->filename : "" ); ?>">
-                            <input type="hidden" id="thumb" name="thumb" value="<?= (isset($view->video->thumb) ? $view->video->thumb : "1"); ?>">
+                            <input type="hidden" name="filename" value="<?php echo (isset($view->filename) ? $view->filename : "" ); ?>">
+                            <input type="hidden" id="thumb" name="thumb" value="<?php echo (isset($view->video->thumb) ? $view->video->thumb : "1"); ?>">
                             <input type="submit" class="button" value="<?php echo _("Save Changes"); ?>">
-                            <? if ($view->editMode) : ?>
-                                <input type="hidden" name="id" value="<?= $view->video->id; ?>">
+                            <?php if ($view->editMode) : ?>
+                                <input type="hidden" name="id" value="<?php echo $view->video->id; ?>">
                                 <button type="submit" value="true" name="delete" class="btn"><?php echo _("Delete"); ?></button>
-                            <? endif; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
 

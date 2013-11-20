@@ -1,5 +1,3 @@
-   
-
 <div class="row">
 
     <div class="large-6 columns">
@@ -13,11 +11,11 @@
             <?php
         endif;
         ?>
-        <h2><?= _("Login"); ?></h2> 
+        <h2><?php echo _("Login"); ?></h2> 
         <form ction="<?php echo Config::get('address'); ?>/user/login" method="post" accept-charset="UTF-8"  role="form">
 
-            <input id="username" type="text" name="user" size="30" placeholder="<? echo _("Username"); ?>"/>
-            <input id="password" type="password" name="password" size="30" placeholder="<? echo _("Password"); ?>"/>
+            <input id="username" type="text" name="user" size="30" placeholder="<?php echo _("Username"); ?>"/>
+            <input id="password" type="password" name="password" size="30" placeholder="<?php echo _("Password"); ?>"/>
 
 
 
@@ -26,7 +24,7 @@
         </form>
     </div>
     <div class="large-6 columns">
-        <h2><?= _("Register"); ?></h2>
+        <h2><?php echo _("Register"); ?></h2>
         <?php if (isset($view->error) && $view->error == true): ?>
 
             <div data-alert class="alert-box">
@@ -54,7 +52,7 @@
             <input id="password" class="form-control" type="password" name="password1" placeholder="Password" />
             <input id="password"  type="password" name="password2" placeholder="Password" />
 
-            <input class="button" type="submit" name="submit" value="<?= _('Sign Up') ?>" />
+            <input class="button" type="submit" name="submit" value="<?php echo _('Sign Up') ?>" />
 
         </form>
 

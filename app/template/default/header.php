@@ -45,16 +45,16 @@
 
                     <ul class="right">
 
-                        <?
+                        <?php
                         if (isset($_SESSION['user'])):
                             ?>        
                             <li><a href="<?php echo Config::get('address'); ?>/user/video"><?php echo _("My Videos"); ?></a></li>
                             <li><a href="<?php echo Config::get('address'); ?>/video/manager/upload"><?php echo _("Upload"); ?></a></li>
                             <li><a href="<?php echo Config::get('address'); ?>/user/logout"><?php echo _("Logout"); ?></a></li>
-                        <? else: ?>
+                        <?php else: ?>
 
                             <li><a href="<?php echo Config::get('address'); ?>/user/login"><?php echo _("SignIn"); ?></a></li>
-                        <? endif; ?>
+                        <?php endif; ?>
                     </ul>
                 </section>
 
