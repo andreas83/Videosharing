@@ -1,5 +1,4 @@
-<?
-
+<?php
 
 /**
  * Auto loader
