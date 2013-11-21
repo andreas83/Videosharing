@@ -1,6 +1,7 @@
 <?php
 include "init.php";
 
+file_put_contents("job-pid.lock", getmypid());
 
 $pids= array();
 while(true)
