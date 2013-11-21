@@ -6,7 +6,7 @@
 
 <script>
 document.write('<script src=' +
-('__proto__' in {} ? '/public/js/zepto' : '/public/js/jquery') +
+('__proto__' in {} ? '<?php echo Config::get('address'); ?>/public/js/zepto' : '<?php echo Config::get('address'); ?>/public/js/jquery') +
 '.js><\/script>')
 </script>
 
