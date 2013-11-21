@@ -8,7 +8,7 @@ $(function() {
             
             
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/video/manager/uploadFile', true);
+            xhr.open('POST', config.address+'/video/manager/uploadFile', true);
             // Just one header should be send with this request to
             // detect an ajax request
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -26,7 +26,7 @@ $(function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var response = $.parseJSON(xhr.response);
                     
-                     window.location ="/video/manager/editFile?video_id="+response.tmpFile;
+                    window.location = config.address+"/video/manager/editFile?video_id="+response.tmpFile;
                 }
             }
 

@@ -8,7 +8,11 @@
             <meta name="viewport" content="width=device-width">
             <link rel="stylesheet" href="<?php echo Config::get('address'); ?>/public/css/foundation.min.css" type="text/css"/>
             <script src="<?php echo Config::get('address'); ?>/public/js/custom.modernizr.js" type="text/javascript"></script>
-            <base id="base" href="<?php echo Config::get('address'); ?>" />
+            
+            <script type="text/javascript">
+                var config = new Object();
+                config.address = '<?php echo Config::get('address'); ?>';
+            </script>
             <style>
             .container{
                 margin-top:20px;
@@ -36,7 +40,7 @@
                     <ul class="title-area">
                         <li class="name">
                             <h1>
-                                <a href="./" class=""> Videomanager</a>
+                                <a href="<?php echo Config::get('address'); ?>" class=""> Videomanager</a>
                             </h1>
                         </li>
                     </ul>
