@@ -44,31 +44,33 @@ class Video_View {
         $ifModifiedSince = (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) ? $_SERVER['HTTP_IF_MODIFIED_SINCE'] : false);
         $etagHeader = (isset($_SERVER['HTTP_IF_NONE_MATCH']) ? trim($_SERVER['HTTP_IF_NONE_MATCH']) : false);
         header("Last-Modified: " . gmdate("D, d M Y H:i:s", $lastModified) . " GMT");
+        header("Expires: " . gmdate("D, d M Y H:i:s", date("U")+60*60*24) . " GMT");
         header("Etag: $etagFile");
         header('Cache-Control: public');
-        /* 	if (@strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'])==$lastModified || $etagHeader == $etagFile)
-          {
+
+        if (@strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'])==$lastModified || $etagHeader == $etagFile)
+        {
           header("HTTP/1.1 304 Not Modified");
           exit;
-          }
-         */
-
+        }
+ 
         if (file_exists($thumb)) {
             header("Content-Type: image/png");
             echo file_get_contents($thumb);
             die();
         }
-
+   
         $image = new Image($img);
-
-        if (isset($_GET['width']) && is_numeric($_GET['width']) && isset($_GET['height']) && is_numeric($_GET['height'])) {
+         
+        if (isset($_GET['width']) && is_numeric($_GET['width']) && isset($_GET['height']) && is_numeric($_GET['height'])) 
+        {          
             $image->resize($_GET['width'], $_GET['height'], "crop");
             $img = str_replace(".png", "-" . $_GET['width'] . "x" . $_GET['height'] . ".png", $img);
             $parts = pathinfo($img);
             $image->setPathToTempFiles("/tmp");
             $image->save($parts['filename'], $parts['dirname'], $parts['extension']);
         }
-
+  
         $image->display();
         die();
     }
