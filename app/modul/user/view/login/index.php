@@ -42,7 +42,7 @@
         <?php if (isset($view->success)): ?>
             <div class="alert alert-info">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <h3>Success</h3><?php echo $view->success; ?><br/>
+                <h3><?php echo _("Success"); ?></h3><?php echo $view->success; ?><br/>
             </div>
         <?php endif; ?> 
 
