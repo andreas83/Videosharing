@@ -20,7 +20,7 @@
     </div>
 
     <div class="large-12 columns">
-        <h1>Recent Videos</h1>
+        <h1><? echo _("Recent Videos"); ?></h1>
     </div>
    
     <?php
