@@ -12,7 +12,7 @@
         endif;
         ?>
         <h2><?php echo _("Login"); ?></h2> 
-        <form ction="<?php echo Config::get('address'); ?>/user/login" method="post" accept-charset="UTF-8"  role="form">
+        <form action="<?php echo Config::get('address'); ?>/user/login" method="post" accept-charset="UTF-8"  role="form">
 
             <input id="username" type="text" name="user" size="30" placeholder="<?php echo _("Username"); ?>"/>
             <input id="password" type="password" name="password" size="30" placeholder="<?php echo _("Password"); ?>"/>
@@ -28,14 +28,14 @@
         <?php if (isset($view->error) && $view->error == true): ?>
 
             <div data-alert class="alert-box">
-                
+
                 <ul>
                     <?php
                     foreach ($view->error_type as $key => $value)
                         echo "$value<br/>"
                         ?> 
                 </ul>
-                
+
             </div>
         <?php endif; ?> 
 
