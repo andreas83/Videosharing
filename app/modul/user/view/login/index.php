@@ -6,7 +6,7 @@
         if (isset($view->login_error)):
             ?>
             <div data-alert class="alert-box">
-                <strong>Warning!</strong> <?php echo $view->login_error; ?>
+                <strong><?php echo _("Warning"); ?>"!</strong> <?php echo $view->login_error; ?>
             </div>
             <?php
         endif;
@@ -47,10 +47,10 @@
         <?php endif; ?> 
 
         <form  action="<?php echo Config::get('address'); ?>/user/login/register" method="post" accept-charset="UTF-8">
-            <input id="username"  class="form-control" type="text" name="user"  placeholder="Username"/>
-            <input id="email" class="form-control" type="text" name="email"  placeholder="eMail"/>                  
-            <input id="password" class="form-control" type="password" name="password1" placeholder="Password" />
-            <input id="password"  type="password" name="password2" placeholder="Password" />
+            <input id="username"  class="form-control" type="text" name="user"  placeholder="<?php echo _("Username"); ?>"/>
+            <input id="email" class="form-control" type="text" name="email"  placeholder="<?php echo _("eMail"); ?>"/>                  
+            <input id="password" class="form-control" type="password" name="password1" placeholder="<?php echo _("Password"); ?>" />
+            <input id="password"  type="password" name="password2" placeholder="<?php echo _("Password"); ?>"" />
 
             <input class="button" type="submit" name="submit" value="<?php echo _('Sign Up') ?>" />
 
