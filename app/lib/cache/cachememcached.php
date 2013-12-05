@@ -296,7 +296,7 @@ class CacheMemcached extends Memcached
 
     public function __destruct()
     {
-        // optional
+        parent::quit();
     }
 }
 ?>
