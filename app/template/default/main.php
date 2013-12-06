@@ -8,10 +8,10 @@
     $i = 0;
     foreach ($data as $view) {
          ?> 
-            <video class="height-auto" video="<?php echo $view->id; ?>"  controls="controls" poster="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?php echo $view->id; ?>/thumb<?php echo $view->thumb; ?>.png">
+        <video class="height-auto" data-video="<?php echo $view->id; ?>"  controls="controls" poster="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?php echo $view->id; ?>/thumb<?php echo $view->thumb; ?>.png">
             <source src="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?php echo $view->id; ?>/<?php echo $view->id; ?>.mp4" type="video/mp4">          
             <source src="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?php echo $view->id; ?>/<?php echo $view->id; ?>.webm" type="video/webm">
-
+            <h2>Your Browser does not support the Video Tag, please upgrade your Browser</h2>
         </video> 
 	<?php
     }
