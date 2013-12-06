@@ -27,7 +27,7 @@ if (isset($view->error) && !empty($view->error)) {
 
 <div class="row">
     <div class="large-12 columns flex-video">
-        <video video="<?php echo $view->id; ?>" width="640" height="380" controls="controls"  poster="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?php echo $view->id; ?>/thumb<?php echo $view->thumb; ?>.png">
+        <video data-video="<?php echo $view->id; ?>" width="640" height="380" controls="controls"  poster="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?php echo $view->id; ?>/thumb<?php echo $view->thumb; ?>.png">
             <source src="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?php echo $view->id; ?>/<?php echo $view->id; ?>.mp4" type="video/mp4">          
             <source src="<?php echo Config::get('address'); ?>/public/video/<?php echo $view->user_id; ?>/<?php echo $view->id; ?>/<?php echo $view->id; ?>.webm" type="video/webm">
         </video> 
